@@ -3,7 +3,7 @@ node_js:
   - "6"
 
 addons:
-  sonarqube:
+  sonarcloud:
     organization: "selenium_webmodule"
     token:
       secure: "fd0978a1c7aae98a65657f90576b9c8cef8733f2"
