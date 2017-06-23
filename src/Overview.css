@@ -1,0 +1,15 @@
+body {
+  background: #8092aa;
+  font-family: sans-serif;
+  color: #FFF;
+}
+
+.Overview {
+  text-align: center;
+  padding: 2%;
+}
+
+.Overview-title {
+  font-size: 40px;
+  margin-bottom: 2%;
+}
