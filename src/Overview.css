@@ -4,6 +4,10 @@ body {
   color: #FFF;
 }
 
+.menu {
+  display: inline-block;
+}
+
 .Overview {
   text-align: center;
   padding: 2%;
