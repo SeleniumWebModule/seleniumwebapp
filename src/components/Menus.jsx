@@ -9,6 +9,7 @@ import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import MenuCadastro from './menus/MenuCadastro';
 import MenuSolicitacao from './menus/MenuSolicitacao';
 import MenuRelatorio from './menus/MenuRelatorio';
+import MenuAcompanhamento from './menus/MenuAcompanhamento';
 
 class Menus extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class Menus extends Component {
               >
                 <MenuCadastro />
                 <MenuSolicitacao />
+                <MenuAcompanhamento />
                 <MenuRelatorio />
               </IconMenu>
         </ToolbarGroup>

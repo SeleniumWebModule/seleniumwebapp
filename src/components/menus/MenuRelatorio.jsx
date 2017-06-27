@@ -2,9 +2,11 @@ import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
+import ActionGavel from 'material-ui/svg-icons/action/gavel';
+import ActionEvent from 'material-ui/svg-icons/action/event';
 
 class MenuRelatorio extends React.Component {
-
   render() {
     return (
       <MenuItem
@@ -13,8 +15,14 @@ class MenuRelatorio extends React.Component {
         leftIcon={<ActionAssignment />}
         menuItems={[
           <MenuItem primaryText="Teste"
-            leftIcon={<ActionAssignment />}
+            leftIcon={<AvPlaylistAddCheck />}
             />,
+          <MenuItem primaryText="Regras"
+            leftIcon={<ActionGavel />}
+            />,
+          <MenuItem primaryText="Eventos"
+            leftIcon={<ActionEvent />}
+            />
         ]}
       />
     );

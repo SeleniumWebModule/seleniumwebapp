@@ -3,9 +3,9 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
 import CommunicationContactPhone from 'material-ui/svg-icons/communication/contact-phone';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import ActionGavel from 'material-ui/svg-icons/action/gavel';
 import ActionEvent from 'material-ui/svg-icons/action/event';
+import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 
 class MenuSolicitacao extends React.Component {
 
@@ -17,7 +17,7 @@ class MenuSolicitacao extends React.Component {
         leftIcon={<CommunicationContactPhone />}
         menuItems={[
           <MenuItem primaryText="Teste"
-            leftIcon={<ActionAssignment />}
+            leftIcon={<AvPlaylistAddCheck />}
             />,
           <Divider />,
           <MenuItem primaryText="Regra"
