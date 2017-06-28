@@ -6,13 +6,13 @@ import Overview from './Overview'
 
 injectTapEventPlugin();
 
-const App = () => (
+const Root = () => (
   <MuiThemeProvider>
     <Overview />
   </MuiThemeProvider>
 );
 
 ReactDOM.render(
-  <App   />,
+  <Root />,
   document.getElementById('root')
 );

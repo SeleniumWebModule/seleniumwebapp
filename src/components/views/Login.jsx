@@ -1,6 +1,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import SocialPerson from 'material-ui/svg-icons/social/person';
 
 class Login extends React.Component {
     constructor(props) {
@@ -34,6 +35,7 @@ class Login extends React.Component {
 
       return (
         <div>
+          <SocialPerson onClick={this.handleOpen} />
           <Dialog
             title="Dialog With Actions"
             actions={actions}
