@@ -4,6 +4,7 @@ import Views from './components/Views';
 import './Overview.css';
 
 class Overview extends Component {
+
   render() {
     return (
       <div className="Overview">
@@ -11,7 +12,7 @@ class Overview extends Component {
           <Toolbar />
           <Views />
       </div>
-    )
+    );
   }
 }
 

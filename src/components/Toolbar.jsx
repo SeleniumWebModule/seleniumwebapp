@@ -6,6 +6,13 @@ import Login from './views/Login'
 import Menus from './Menus';
 
 class Toolbar extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      menu: ''
+    }
+  }
+
   render() {
     return (
       <ToolbarReact>

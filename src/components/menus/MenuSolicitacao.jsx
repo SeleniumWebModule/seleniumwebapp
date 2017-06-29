@@ -6,30 +6,42 @@ import CommunicationContactPhone from 'material-ui/svg-icons/communication/conta
 import ActionGavel from 'material-ui/svg-icons/action/gavel';
 import ActionEvent from 'material-ui/svg-icons/action/event';
 import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
+import { connect } from 'react-redux';
+import { selectedPath } from '../../actions';
 
 class MenuSolicitacao extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+          currentPath: ''
+        }
+    }
 
-  render() {
-    return (
-      <MenuItem
-        primaryText="Solicitação"
-        rightIcon={<ArrowDropRight />}
-        leftIcon={<CommunicationContactPhone />}
-        menuItems={[
-          <MenuItem primaryText="Teste"
-            leftIcon={<AvPlaylistAddCheck />}
-            />,
-          <Divider />,
-          <MenuItem primaryText="Regra"
-              leftIcon={<ActionGavel />}
-            />,
-          <MenuItem primaryText="Evento"
-              leftIcon={<ActionEvent />}
-            />,
-        ]}
-      />
-    );
-  }
+    selectedPath(path) {
+      this.props.selectedPath(path);
+    }
+
+    render() {
+      return (
+        <MenuItem
+          primaryText="Solicitação"
+          rightIcon={<ArrowDropRight />}
+          leftIcon={<CommunicationContactPhone />}
+          menuItems={[
+            <MenuItem primaryText="Teste"
+              leftIcon={<AvPlaylistAddCheck />}
+              />,
+            <Divider />,
+            <MenuItem primaryText="Regra"
+                leftIcon={<ActionGavel />}
+              />,
+            <MenuItem primaryText="Evento"
+                leftIcon={<ActionEvent />}
+              />,
+          ]}
+        />
+      );
+    }
 }
 
-export default MenuSolicitacao
+export default connect (null, {selectedPath}) (MenuSolicitacao);

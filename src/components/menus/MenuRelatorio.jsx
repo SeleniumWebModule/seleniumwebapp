@@ -5,8 +5,21 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 import ActionGavel from 'material-ui/svg-icons/action/gavel';
 import ActionEvent from 'material-ui/svg-icons/action/event';
+import { connect } from 'react-redux';
+import { selectedPath } from '../../actions';
 
 class MenuRelatorio extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+          currentPath: ''
+        }
+    }
+
+    selectedPath(path) {
+      this.props.selectedPath(path);
+    }
+
   render() {
     return (
       <MenuItem
@@ -29,4 +42,4 @@ class MenuRelatorio extends React.Component {
   }
 }
 
-export default MenuRelatorio
+export default connect (null, {selectedPath}) (MenuRelatorio);

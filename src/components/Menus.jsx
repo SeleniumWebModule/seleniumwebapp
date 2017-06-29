@@ -11,9 +11,8 @@ import MenuRelatorio from './menus/MenuRelatorio';
 class Menus extends React.Component {
   constructor(props) {
       super(props);
-      console.log(props)
       this.state = {
-        info : ''
+        menu : ''
       }
   }
 

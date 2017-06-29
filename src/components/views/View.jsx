@@ -2,13 +2,13 @@ import React from 'react';
 import '../../css/View.css';
 import { connect } from 'react-redux';
 
-class Home extends React.Component {
+class View extends React.Component {
   render() {
-    const { paths } = this.props;
+    const {paths} = this.props;
 
     return(
-      <div className={paths.currentPath!=='/' ? 'hidden' : ''}>
-        Página Home
+      <div className={paths.currentPath !== '/view' ? 'hidden' : ''}>
+        Tela de Cadastro da View
       </div>
     );
   }
@@ -20,4 +20,4 @@ function currentPath(state) {
   }
 }
 
-export default connect(currentPath, null) (Home);
+export default connect(currentPath, null) (View)
