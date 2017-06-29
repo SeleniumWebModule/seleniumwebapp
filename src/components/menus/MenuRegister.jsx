@@ -10,7 +10,7 @@ import SocialPersonAdd from 'material-ui/svg-icons/social/person-add';
 import { connect } from 'react-redux';
 import { selectedPath } from '../../actions';
 
-class MenuCadastro extends React.Component {
+class MenuRegister extends React.Component {
   constructor(props) {
       super(props)
       this.state = {
@@ -30,22 +30,22 @@ class MenuCadastro extends React.Component {
         rightIcon={<ArrowDropRight />}
         leftIcon={<ActionNoteAdd />}
         menuItems={[
-          <MenuItem primaryText="System"
-            onClick={() => {this.selectedPath("/system")}}
+          <MenuItem primaryText="Sistema"
+            onClick={() => {this.selectedPath("/register/system")}}
             leftIcon={<ActionOpenInBrowser />}
             />,
-          <MenuItem primaryText="View"
-            onClick={() => {this.selectedPath('/view')}}
+          <MenuItem primaryText="Tela"
+            onClick={() => {this.selectedPath('/register/screen')}}
             leftIcon={<DeviceDvr />}
             />,
-          <MenuItem primaryText="Component"
+          <MenuItem primaryText="Componente"
             leftIcon={<ImagePhotoAlbum />}
-            onClick ={() => {this.selectedPath('/component')}}
+            onClick ={() => {this.selectedPath('/register/component')}}
             />,
           <Divider />,
           <MenuItem primaryText="Usuário"
             leftIcon={<SocialPersonAdd />}
-            onClick={() => {this.selectedPath('/user')}}
+            onClick={() => {this.selectedPath('/register/user')}}
             />
         ]}
       />
@@ -54,4 +54,4 @@ class MenuCadastro extends React.Component {
   }
 }
 
-export default connect (null, {selectedPath}) (MenuCadastro);
+export default connect (null, {selectedPath}) (MenuRegister);

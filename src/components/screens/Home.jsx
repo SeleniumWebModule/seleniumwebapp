@@ -1,13 +1,16 @@
 import React from 'react';
-import '../../css/View.css';
+import '../../css/Screens.css';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
   render() {
     const { paths } = this.props;
 
+    console.log(paths.currentPath);
+
     return(
-      <div className={paths.currentPath!=='/' ? 'hidden' : ''}>
+      <div className={(paths.currentPath === undefined || paths.currentPath === '/home')
+        ?  '' : 'hidden'}>
         Página Home
       </div>
     );

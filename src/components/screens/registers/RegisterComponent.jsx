@@ -1,13 +1,13 @@
 import React from 'react';
-import '../../css/View.css';
+import '../../../css/Screens.css';
 import { connect } from 'react-redux';
 
-class Component extends React.Component {
+class RegisterComponent extends React.Component {
   render() {
     const {paths} = this.props;
 
     return(
-      <div className={paths.currentPath !== '/component' ? 'hidden' : ''}>
+      <div className={paths.currentPath !== '/register/component' ? 'hidden' : ''}>
         Cadastro de Componente
       </div>
     );
@@ -20,4 +20,4 @@ function currentPath(state) {
   }
 }
 
-export default connect(currentPath, null) (Component)
+export default connect(currentPath, null) (RegisterComponent)

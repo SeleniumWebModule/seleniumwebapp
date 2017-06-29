@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Toolbar from './components/Toolbar';
-import Views from './components/Views';
+import Screens from './components/Screens';
 import './Overview.css';
 
 class Overview extends Component {
@@ -10,7 +10,7 @@ class Overview extends Component {
       <div className="Overview">
         <div className="Overview-title">Selenium Web App - RJ Consultores</div>
           <Toolbar />
-          <Views />
+          <Screens />
       </div>
     );
   }

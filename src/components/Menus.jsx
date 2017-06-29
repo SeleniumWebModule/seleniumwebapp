@@ -3,10 +3,10 @@ import {ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
-import MenuCadastro from './menus/MenuCadastro';
-import MenuAcompanhamento from './menus/MenuAcompanhamento';
-import MenuSolicitacao from './menus/MenuSolicitacao';
-import MenuRelatorio from './menus/MenuRelatorio';
+import MenuRegister from './menus/MenuRegister';
+import MenuRequest from './menus/MenuRequest';
+import MenuMonitoring from './menus/MenuMonitoring';
+import MenuReport from './menus/MenuReport';
 
 class Menus extends React.Component {
   constructor(props) {
@@ -25,10 +25,10 @@ class Menus extends React.Component {
             anchorOrigin={{ horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
-              <MenuCadastro />
-              <MenuSolicitacao />
-              <MenuAcompanhamento />
-              <MenuRelatorio />
+              <MenuRegister />
+              <MenuRequest />
+              <MenuMonitoring />
+              <MenuReport />
           </IconMenu>
         </ToolbarGroup>
       );
