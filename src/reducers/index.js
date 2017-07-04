@@ -1,4 +1,5 @@
 import { SELECTED_PATH } from '../constants';
+import { SELECTED_VALUE } from '../constants';
 
 const selectedPath = (action) => {
   return {
@@ -6,15 +7,33 @@ const selectedPath = (action) => {
   }
 }
 
-const paths = (state=[], action) => {
-  let paths = null;
-  switch(action.type) {
-    case SELECTED_PATH:
-      paths = selectedPath(action);
-      return paths;
-    default:
-      return state;
+const selectedValue = (action) => {
+  return {
+    currentValue: action.currentValue
   }
 }
 
-export default paths
+let stateReducer = {
+  currentPath: '',
+  currentValue: ''
+}
+
+const states = (state={}, action) => {
+  switch(action.type) {
+    case SELECTED_PATH:
+      stateReducer.currentPath = selectedPath(action).currentPath;
+      return stateReducer;
+    case SELECTED_VALUE:
+      const currentScreen = stateReducer.currentPath;
+
+      stateReducer = {
+        currentPath: currentScreen,
+        currentValue: selectedValue(action).currentValue
+      }
+      return stateReducer;
+    default:
+      return states;
+  }
+}
+
+export default states;

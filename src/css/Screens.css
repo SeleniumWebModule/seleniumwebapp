@@ -1,3 +1,53 @@
 .hidden {
   display: none;
 }
+
+.screen-style {
+  margin-top: 1%;
+  font-size: 20px;
+  width: 80%;
+  margin-left: 9%;
+}
+
+.label {
+  color: black;
+  font-family: monospace;
+  font-size: 24px;
+}
+
+.iconbtn-pageheader {
+  float: right;
+}
+
+.title-screen {
+  font-family: cursive;
+  margin-left: 2%;
+}
+
+.pnl {
+    text-align: left;
+}
+
+.form-label-component {
+  margin-left: 2%;
+  color: black;
+  font-family: monospace;
+  font-size: 24px;
+}
+
+.form-component {
+  margin-left: 2%;
+  margin-right: 3%;
+  color: black;
+  font-family: monospace;
+  font-size: 24px;
+}
+
+.tab {
+  margin-top: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  color: black;
+  font-family: monospace;
+  font-size: 24px;
+}
