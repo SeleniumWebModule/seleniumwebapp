@@ -8,15 +8,7 @@ import ContentSave from 'material-ui/svg-icons/content/save';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AlertError from '../../components/AlertError';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import TableWebApp from '../../components/Table';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
 
@@ -34,7 +26,13 @@ class RegisterSystem extends React.Component {
           height: 86,
           padding: 14,
         }
-      }
+      }, 
+      tableHeader: [
+        "Nome",
+        "Endereço (IP)",
+        "Porta"
+      ],
+      tableValues: [{'dfsadfsdfsdf', '127.0.0.1 (localhost)', port: '8080'}]
     };
   }
 
@@ -59,6 +57,9 @@ class RegisterSystem extends React.Component {
 
               <TextField hintText="Default: 8080" floatingLabelText="Porta" floatingLabelFixed={true}
                 style={{marginLeft:"2%"}} maxLength="5"/>
+           </div>
+           <div>
+            <TableWebApp tableHeader={this.state.tableHeader} tableValues={this.state.tableValues}/>
            </div>
 
         </Panel>
