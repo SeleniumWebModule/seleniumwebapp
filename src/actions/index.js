@@ -1,5 +1,5 @@
 import { SELECTED_PATH } from '../constants';
-import { SELECTED_VALUE } from '../constants';
+import { REGISTER_SCREEN } from '../constants';
 
 export const selectedPath = (currentPath) => {
   const action = {
@@ -10,10 +10,10 @@ export const selectedPath = (currentPath) => {
   return action;
 }
 
-export const selectedValue = (currentValue) => {
+export const registerScreen = (newScreen) => {
   const action = {
-    type: SELECTED_VALUE,
-    currentValue
+    type: REGISTER_SCREEN,
+    newScreen
   }
 
   return action;

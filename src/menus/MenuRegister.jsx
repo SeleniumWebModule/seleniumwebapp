@@ -34,6 +34,7 @@ class MenuRegister extends React.Component {
             onClick={() => {this.selectedPath("/register/system")}}
             leftIcon={<ActionOpenInBrowser />}
             />,
+          <Divider />,
           <MenuItem primaryText="Tela"
             onClick={() => {this.selectedPath('/register/screen')}}
             leftIcon={<DeviceDvr />}

@@ -1,5 +1,5 @@
 import { SELECTED_PATH } from '../constants';
-import { SELECTED_VALUE } from '../constants';
+import { REGISTER_SCREEN } from '../constants';
 
 const selectedPath = (action) => {
   return {
@@ -7,29 +7,32 @@ const selectedPath = (action) => {
   }
 }
 
-const selectedValue = (action) => {
+const registerScreen = (action) => {
   return {
-    currentValue: action.currentValue
+    newScreen: action.newScreen
   }
 }
 
 let stateReducer = {
   currentPath: '',
-  currentValue: ''
+  newScreen: ''
 }
 
-const states = (state={}, action) => {
+const states = (state=[], action) => {
   switch(action.type) {
     case SELECTED_PATH:
       stateReducer.currentPath = selectedPath(action).currentPath;
       return stateReducer;
-    case SELECTED_VALUE:
+    case REGISTER_SCREEN:
       const currentScreen = stateReducer.currentPath;
 
       stateReducer = {
         currentPath: currentScreen,
-        currentValue: selectedValue(action).currentValue
+        newScreen: [...state,registerScreen(action).newScreen]
       }
+
+      console.log(stateReducer);
+
       return stateReducer;
     default:
       return states;

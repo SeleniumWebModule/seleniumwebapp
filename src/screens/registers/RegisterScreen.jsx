@@ -1,13 +1,13 @@
 import React  from 'react';
-import {PageHeader, Well} from 'react-bootstrap';
+import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 import IconButton from 'material-ui/IconButton';
 import DeviceDvr from 'material-ui/svg-icons/device/dvr';
 import ContentSave from 'material-ui/svg-icons/content/save';
 import AutoCompleteWebApp from '../../components/AutoComplete';
-import TableWebApp from '../../components/Table';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import AlertError from '../../components/AlertError';
 import {
   Table,
   TableBody,
@@ -19,7 +19,7 @@ import {
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
-import { selectedValue } from '../../actions';
+import { registerScreen } from '../../actions';
 
 class RegisterScreen extends React.Component {
   constructor (props){
@@ -30,6 +30,9 @@ class RegisterScreen extends React.Component {
       system: '',
       eventName: '',
       ruleName: '',
+      attrType: '',
+      attrValue: '',
+      msgerrorname: '',
       systemsDS : [
         'Administrativo - Sistema Web',
         'Venda - Sistema Desktop'
@@ -54,16 +57,11 @@ class RegisterScreen extends React.Component {
         'Nome da Tela (Associar com a regra Aguardar Tela - Se não for informado utilizará a própria tela)',
         'Valor (Attribute Value - Exemplo: Referente ao Identificador, seria o nome da classe, tag ...)'
       ],
-      tableHeader :['Evento', 'Regra'],
-      tableValues :[{
-          eventName: '',
-          ruleName: ''
-      }],
-      tableHeaderAttrs :['Tipo do Atributo', 'Nome do Atributo'],
-      tableValuesAttrs :[{
-          attrType: '',
-          attrValue: ''
-      }],
+      tableHeaderEvents : ['Evento', 'Regra'],
+      tableValueEvents : [],
+      tableHeaderAttrs : ['Tipo do Atributo', 'Nome do Atributo'],
+      tableValueAttrs : [],
+      msgErrorEvent: false,
       stylesTab : {
         headline: {
           fontSize: 24,
@@ -86,45 +84,13 @@ class RegisterScreen extends React.Component {
     }
   }
 
-  selectedValue(text) {
-    this.props.selectedValue(text);
-  }
+  associateEvent() {
+    if (this.state.eventName === '') {
+      this.showMessageError(this.refs.msgeventerrorref, "Evento Inválido!", "Os campos Evento e Regra devem ser preenchidos.");
+      return;
+    }
 
-  onSelectedAutoCompleteSystem(event) {
-    this.setState({system: event.target.value});
-  }
-
-  onSelectedAutoCompleteEvent(event) {
-    this.setState({eventName: event.target.value});
-  }
-
-  onSelectedAutoCompleteRule(event) {
-    this.setState({ruleName: event.target.value});
-  }
-
-  onSelectedAutoCompleteAttrType(event) {
-    this.setState({attrType: event.target.value});
-  }
-
-  onSelectedAutoCompleteAttrValue(event) {
-    this.setState({attrValue: event.target.value});
-  }
-
-  onBlurNameSystem(event) {
-    this.setState({name: event.target.value});
-  }
-
-  populateView() {
-    this.setState({
-      view: {
-        name: this.state.name,
-        system: this.state.system
-      },
-    });
-  }
-
-  associarEvento() {
-    let events = this.state.tableValues;
+    let events = this.state.tableValueEvents;
 
     const eventValue = {
       eventName: this.state.eventName,
@@ -134,14 +100,21 @@ class RegisterScreen extends React.Component {
     events.push(eventValue);
 
     this.setState({
-      tableValues: events
+      tableValueEvents: events,
+      eventName: '',
+      ruleName: '',
     });
 
-    this.clearFields();
+    this.clearEventsFields();
   }
 
-  associarAtributo() {
-    let attrs = this.state.tableValues;
+  associateAttr() {
+    if (this.state.attrType === '') {
+      this.showMessageError(this.refs.msgattrerrorref, "Atributo Inválido!", "Os campos Tipo de Atributo e Valor de Atributo devem ser preenchidos.");
+      return;
+    }
+
+    let attrs = this.state.tableValueAttrs;
 
     const attrsValue = {
       attrType: this.state.attrType,
@@ -151,15 +124,46 @@ class RegisterScreen extends React.Component {
     attrs.push(attrsValue);
 
     this.setState({
-      tableValuesAttrs: attrs
+      tableValueAttrs : attrs,
+      attrType: '',
+      attrValue: ''
     });
 
-    this.clearFields();
+    this.clearAttrsFields();
   }
 
-  clearFields() {
+  save() {
+    if (this.state.name === '') {
+      this.setState({msgerrorname:'O campo nome deve ser preenchido'});
+      return;
+    }
+
+    const newScreen = {
+      name: this.state.name,
+      system: this.state.system,
+      events: this.state.tableValueEvents,
+      attributes: this.state.tableValueAttrs
+    }
+
+    this.props.registerScreen(newScreen);
+  }
+
+  clearEventsFields() {
     this.refs.eventref.clearText();
     this.refs.ruleref.clearText();
+  }
+
+  clearAttrsFields() {
+    this.refs.attrtyperef.clearText();
+    this.refs.attrvalueref.clearText();
+  }
+
+  hideAlert() {
+    this.props.hideAlert();
+  }
+
+  showMessageError(componentref, msghead, msgbody) {
+    componentref.showAlert(msghead, msgbody);
   }
 
   render() {
@@ -171,17 +175,17 @@ class RegisterScreen extends React.Component {
            <PageHeader>
              <DeviceDvr />
              <label className="title-screen">Cadastro de Tela</label>
-             <div className="iconbtn-pageheader">
-               <IconButton
-                 iconStyle={this.state.iconStyles.mediumIcon}
-                 style={this.state.iconStyles.medium}
-                 ><ContentSave /></IconButton>
+             <div className="iconbtn-pageheader" onClick={() => {this.save()}}>
+               <IconButton iconStyle={this.state.iconStyles.mediumIcon} style={this.state.iconStyles.medium}>
+                 <ContentSave />
+               </IconButton>
              </div>
            </PageHeader>
-           <div className="form-component" onBlur={this.onBlurNameSystem.bind(this)} ref="someName">
-              <TextField hintText="Defina o nome da tela" floatingLabelText="Nome" floatingLabelFixed={true} fullWidth={true}/>
+           <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})} ref="nameref">
+              <TextField hintText="Defina o nome da tela" floatingLabelText="Nome" floatingLabelFixed={true}
+                fullWidth={true} errorText={this.state.msgerror}/>
            </div>
-           <div className='form-component' onBlur={this.onSelectedAutoCompleteSystem.bind(this)}>
+           <div className='form-component' onBlur={(event) => {this.setState({system: event.target.value})}}>
              <AutoCompleteWebApp labelText='Sistema' hintText='Selecione o sistema (tela de cadastro de sistema)'
                dataSource={this.state.systemsDS} />
            </div>
@@ -190,20 +194,28 @@ class RegisterScreen extends React.Component {
               <Tabs>
                 <Tab label='Eventos' >
                   <div>
-                    <div className='form-component' onBlur={this.onSelectedAutoCompleteEvent.bind(this)}>
-                      <AutoCompleteWebApp labelText='Evento' hintText='Defina o evento'
-                        dataSource={this.state.eventsDS} ref="eventref"/>
+                    <div className='form-component' onBlur={(event) => {this.setState({eventName: event.target.value})}}
+                      onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
+                      <AutoCompleteWebApp labelText='Evento' hintText='Defina o evento' dataSource={this.state.eventsDS}
+                        ref="eventref"/>
                     </div>
 
-                    <div className='form-component' onBlur={this.onSelectedAutoCompleteRule.bind(this)}>
+                    <div className='form-component' onBlur={(event) => {this.setState({ruleName: event.target.value})}}
+                      onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
                       <AutoCompleteWebApp labelText='Regra' hintText='Defina a regra para o evento'
                         dataSource={this.state.rulesDS} ref="ruleref"/>
                     </div>
 
-                    <RaisedButton primary={true} fullWidth={true} onClick={() => {this.associarEvento()}} label="Associar" />
+
+                        
+
+
+                    <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateEvent()}} label="Associar" />
+                    <AlertError ref="msgeventerrorref"/>
+
                     <div>
                       <Table
-                        selectable={false}
+                        selectable={true}
                         fixedHeader={true}
                         >
                         <TableHeader>
@@ -213,11 +225,12 @@ class RegisterScreen extends React.Component {
                           </TableRow>
                         </TableHeader>
                         <TableBody
-                          displayRowCheckbox={false}
-                          showRowHover={false}
+                          displayRowCheckbox={true}
+                          showRowHover={true}
                           stripedRows={false}
                         >
-                          {this.state.tableValues.map( (row, index) => (
+
+                          {this.state.tableValueEvents.map( (row, index) => (
                             <TableRow key={index}>
                               <TableRowColumn>{row.eventName}</TableRowColumn>
                               <TableRowColumn>{row.ruleName}</TableRowColumn>
@@ -230,17 +243,20 @@ class RegisterScreen extends React.Component {
                 </Tab>
                 <Tab label="Atributos" >
                   <div>
-                    <div className='form-component' onBlur={this.onSelectedAutoCompleteAttrType.bind(this)}>
+                    <div className='form-component' onBlur={(event) => {this.setState({attrType: event.target.value})}}
+                      onFocus={() => {this.refs.msgattrerrorref.hideAlert()}}>
                       <AutoCompleteWebApp labelText='Tipo do Atributo' hintText='Entre com  o tipo do atributo'
                         dataSource={this.state.attrTypeDS} ref="attrtyperef"/>
                     </div>
 
-                    <div className='form-component' onBlur={this.onSelectedAutoCompleteAttrValue.bind(this)}>
+                    <div className='form-component' onBlur={(event) => {this.setState({attrValue: event.target.value})}}>
                       <AutoCompleteWebApp labelText='Valor do Atributo' hintText='Entre com o valor do atributo'
                         dataSource={this.state.attrValueDS} ref="attrvalueref"/>
                     </div>
 
-                    <RaisedButton primary={true} fullWidth={true} onClick={() => {this.associarAtributo()}} label="Associar" />
+                    <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateAttr()}} label="Associar" />
+                    <AlertError ref="msgattrerrorref"/>
+
                     <div>
                       <Table
                         selectable={true}
@@ -255,9 +271,9 @@ class RegisterScreen extends React.Component {
                         <TableBody
                           displayRowCheckbox={true}
                           showRowHover={true}
-                          stripedRows={true}
+                          stripedRows={false}
                         >
-                          {this.state.tableValuesAttrs.map( (row, index) => (
+                          {this.state.tableValueAttrs.map( (row, index) => (
                             <TableRow key={index}>
                               <TableRowColumn>{row.attrType}</TableRowColumn>
                               <TableRowColumn>{row.attrValue}</TableRowColumn>
@@ -282,4 +298,4 @@ function currentState(state) {
   }
 }
 
-export default connect(currentState, { selectedValue }) (RegisterScreen)
+export default connect(currentState, {registerScreen}) (RegisterScreen)

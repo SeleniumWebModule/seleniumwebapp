@@ -1,74 +1,72 @@
-import React from 'react';
-import {Form, FormGroup, FormControl, Col, ControlLabel} from 'react-bootstrap';
+import React  from 'react';
+import {PageHeader} from 'react-bootstrap';
+import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
 import IconButton from 'material-ui/IconButton';
 import ActionOpenInBrowser from 'material-ui/svg-icons/action/open-in-browser';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
+import ContentSave from 'material-ui/svg-icons/content/save';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import AlertError from '../../components/AlertError';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
 
 class RegisterSystem extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      iconStyles : {
+        mediumIcon: {
+          width: 38,
+          height: 48,
+        },
+        medium : {
+          width: 86,
+          height: 86,
+          padding: 14,
+        }
+      }
+    };
+  }
+
+  save() {
+    
+  }
+
   render() {
     const { paths } = this.props;
 
-    return(
+    const systemScreen = (
       <div className={paths.currentPath !== '/register/system' ? 'hidden' : 'screen-style'}>
-        <AppBar
-          className="back"
-          title="Cadastro de Sistema"
-          iconElementLeft={<IconButton><ActionOpenInBrowser /></IconButton>}
-          iconElementRight={<FlatButton label="Salvar" />}
-          />
+        <Panel className="pnl">
+           <Header save={this.save.bind(this)} title="Cadastro de Sistema"/>
+           <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})}>
+              <TextField hintText="Defina o nome do sistema" floatingLabelText="Nome"
+                floatingLabelFixed={true} maxLength="50" fullWidth={true}/>
+           </div>
+           <div className="form-component">
+              <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value="127.0.0.1 (localhost)"
+                disabled/>
 
-        <Form horizontal>
-          <Panel>
-              <div className="pan">
-                <FormGroup controlId="formHorizontalSistema">
-                  <Col  componentClass={ControlLabel} sm={1}>
-                    Nome
-                  </Col>
+              <TextField hintText="Default: 8080" floatingLabelText="Porta" floatingLabelFixed={true}
+                style={{marginLeft:"2%"}} maxLength="5"/>
+           </div>
 
-                  <Col sm={10}>
-                    <FormControl type="text"
-                      placeholder="Entre com o nome do sistema a ser registrado" />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup controlId="formHorizontalUrl">
-                  <Col componentClass={ControlLabel} sm={1}>
-                    URL
-                  </Col>
-                  <Col sm={10}>
-                    <FormControl type="text"
-                      placeholder="Entre com a URL de acesso do sistema" />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup controlId="formHorizontalUser">
-                  <Col  componentClass={ControlLabel} sm={1}>
-                    Usuário
-                  </Col>
-
-                  <Col sm={10}>
-                    <FormControl type="text"
-                      placeholder="Entre com o usuário para o login" />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup controlId="formHorizontalSenha">
-                  <Col componentClass={ControlLabel} sm={1}>
-                    Senha
-                  </Col>
-                  <Col sm={10}>
-                    <FormControl type="password"
-                      placeholder="Entre com a senha para o usuário informado" />
-                  </Col>
-                </FormGroup>
-              </div>
-            </Panel>
-        </Form>
+        </Panel>
       </div>
+    )
+
+    return (
+      systemScreen
     );
   }
 }

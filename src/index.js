@@ -38,16 +38,16 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const Root = () => (
+const Layout = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <Overview />
       </Provider>
     </MuiThemeProvider>
-
 );
 
+const app = document.getElementById('root');
+
 ReactDOM.render(
-  <Root />,
-  document.getElementById('root')
+  <Layout />, app
 );
