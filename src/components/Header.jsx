@@ -28,8 +28,6 @@ class Header extends React.Component {
   }
 
   render() {
-    this.props.save();
-
     const Header = (
       <PageHeader>
         <ActionOpenInBrowser />

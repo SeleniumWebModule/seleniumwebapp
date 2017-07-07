@@ -229,7 +229,6 @@ class RegisterScreen extends React.Component {
                           showRowHover={true}
                           stripedRows={false}
                         >
-
                           {this.state.tableValueEvents.map( (row, index) => (
                             <TableRow key={index}>
                               <TableRowColumn>{row.eventName}</TableRowColumn>

@@ -8,7 +8,7 @@ import ContentSave from 'material-ui/svg-icons/content/save';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AlertError from '../../components/AlertError';
-import TableWebApp from '../../components/Table';
+import TableWebApp from '../../components/tables/TableWebApp';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
 
@@ -16,28 +16,39 @@ class RegisterSystem extends React.Component {
   constructor() {
     super();
     this.state = {
-      iconStyles : {
-        mediumIcon: {
-          width: 38,
-          height: 48,
-        },
-        medium : {
-          width: 86,
-          height: 86,
-          padding: 14,
-        }
-      }, 
-      tableHeader: [
-        "Nome",
-        "Endereço (IP)",
-        "Porta"
-      ],
-      tableValues: [{'dfsadfsdfsdf', '127.0.0.1 (localhost)', port: '8080'}]
+      name: '',
+      address: '127.0.0.1 (localhost)',
+      port: '',
+      tableHeader: ["Nome", "Endereço (IP)", "Porta"],
+      tableValues: []    
     };
   }
 
   save() {
-    
+    console.log(this.refs.nameref.props);
+    this.refs.nameref.setState({value:""});
+    return;
+
+    if (this.state.name === '') {
+      //mensagem de erro
+      return;
+    }
+
+    let system = this.state.tableValues;
+
+    const newSystem = {
+      name: this.state.name,
+      address: this.state.address,
+      port: this.state.port === '' ? '8080'  : this.state.port
+    }
+
+    system.push(newSystem);
+
+    this.setState({
+      tableValues: system,
+      name: '',
+      port: ''
+    });
   }
 
   render() {
@@ -49,17 +60,20 @@ class RegisterSystem extends React.Component {
            <Header save={this.save.bind(this)} title="Cadastro de Sistema"/>
            <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})}>
               <TextField hintText="Defina o nome do sistema" floatingLabelText="Nome"
-                floatingLabelFixed={true} maxLength="50" fullWidth={true}/>
+                floatingLabelFixed={true} maxLength="50" fullWidth={true} 
+                ref="nameref"/>
            </div>
            <div className="form-component">
-              <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value="127.0.0.1 (localhost)"
+              <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value={this.state.address}
                 disabled/>
-
-              <TextField hintText="Default: 8080" floatingLabelText="Porta" floatingLabelFixed={true}
-                style={{marginLeft:"2%"}} maxLength="5"/>
+              <div style={{float: "right"}} onBlur={(event) => this.setState({port: event.target.value})}>
+                <TextField hintText="Default 8080" floatingLabelText="Porta" floatingLabelFixed={true}
+                  style={{marginLeft:"2%"}} maxLength="5" value="this.state.port" ref="portref"/>
+              </div>
            </div>
            <div>
-            <TableWebApp tableHeader={this.state.tableHeader} tableValues={this.state.tableValues}/>
+            <TableWebApp tableHeader={this.state.tableHeader} tableValues={this.state.tableValues} 
+              table={"system"}/> 
            </div>
 
         </Panel>
