@@ -25,10 +25,6 @@ class RegisterSystem extends React.Component {
   }
 
   save() {
-    console.log(this.refs.nameref.props);
-    this.refs.nameref.setState({value:""});
-    return;
-
     if (this.state.name === '') {
       //mensagem de erro
       return;
