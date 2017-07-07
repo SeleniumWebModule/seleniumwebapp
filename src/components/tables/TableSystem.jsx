@@ -11,8 +11,6 @@ import {
 export default class TableSystem extends React.Component {
   render() {
 
-    console.log('from TableSystem', this.props);
-
     const tableSystem = (
 
       <Table

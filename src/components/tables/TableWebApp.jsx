@@ -1,6 +1,6 @@
 import React from 'react';
 import Subheader from 'material-ui/Subheader';
-import TableSystem from './system';
+import TableSystem from './TableSystem';
 import {
   Table,
   TableBody,

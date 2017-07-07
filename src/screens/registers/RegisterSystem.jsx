@@ -11,6 +11,7 @@ import AlertError from '../../components/AlertError';
 import TableWebApp from '../../components/tables/TableWebApp';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
+import { registerSystem } from '../../actions';
 
 class RegisterSystem extends React.Component {
   constructor() {
@@ -20,8 +21,15 @@ class RegisterSystem extends React.Component {
       address: '127.0.0.1 (localhost)',
       port: '',
       tableHeader: ["Nome", "Endereço (IP)", "Porta"],
-      tableValues: []    
+      tableValues: [],
+      clearTextField: false    
     };
+  }
+
+  handleInputChange(event) {
+      this.setState({
+          name: event.target.value
+      })
   }
 
   save() {
@@ -45,26 +53,30 @@ class RegisterSystem extends React.Component {
       name: '',
       port: ''
     });
+
+    this.props.registerSystem(newSystem);
   }
 
   render() {
-    const { paths } = this.props;
+    const { states } = this.props;
 
     const systemScreen = (
-      <div className={paths.currentPath !== '/register/system' ? 'hidden' : 'screen-style'}>
+      <div className={states.currentPath !== '/register/system' ? 'hidden' : 'screen-style'}>
         <Panel className="pnl">
            <Header save={this.save.bind(this)} title="Cadastro de Sistema"/>
-           <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})}>
+           <div className="form-component" ref="divreact" 
+              onBlur={(event) => this.setState({name: event.target.value})}
+              >
               <TextField hintText="Defina o nome do sistema" floatingLabelText="Nome"
                 floatingLabelFixed={true} maxLength="50" fullWidth={true} 
-                ref="nameref"/>
+                ref="nameref" value={this.state.name} onChange={this.handleInputChange.bind(this)}/>
            </div>
            <div className="form-component">
-              <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value={this.state.address}
+              <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value={this.state.address} 
                 disabled/>
               <div style={{float: "right"}} onBlur={(event) => this.setState({port: event.target.value})}>
                 <TextField hintText="Default 8080" floatingLabelText="Porta" floatingLabelFixed={true}
-                  style={{marginLeft:"2%"}} maxLength="5" value="this.state.port" ref="portref"/>
+                  style={{marginLeft:"2%"}} maxLength="5" ref="portref"/>
               </div>
            </div>
            <div>
@@ -84,8 +96,8 @@ class RegisterSystem extends React.Component {
 
 function currentPath(stateReducer) {
   return {
-    paths: stateReducer
+    states: stateReducer
   }
 }
 
-export default connect(currentPath, null) (RegisterSystem)
+export default connect(currentPath, {registerSystem}) (RegisterSystem)
