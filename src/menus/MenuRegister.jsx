@@ -11,17 +11,6 @@ import { connect } from 'react-redux';
 import { selectedPath } from '../actions';
 
 class MenuRegister extends React.Component {
-  constructor(props) {
-      super(props)
-      this.state = {
-        currentPath: ''
-      }
-  }
-
-  selectedPath(path) {
-    this.props.selectedPath(path);
-  }
-
   render() {
     return (
       <div>
@@ -31,22 +20,22 @@ class MenuRegister extends React.Component {
         leftIcon={<ActionNoteAdd />}
         menuItems={[
           <MenuItem primaryText="Sistema"
-            onClick={() => {this.selectedPath("/register/system")}}
+            onClick={() => {this.props.selectedPath("/register/system")}}
             leftIcon={<ActionOpenInBrowser />}
             />,
           <Divider />,
           <MenuItem primaryText="Tela"
-            onClick={() => {this.selectedPath('/register/screen')}}
+            onClick={() => {this.props.selectedPath('/register/screen')}}
             leftIcon={<DeviceDvr />}
             />,
           <MenuItem primaryText="Componente"
             leftIcon={<ImagePhotoAlbum />}
-            onClick ={() => {this.selectedPath('/register/component')}}
+            onClick ={() => {this.props.selectedPath('/register/component')}}
             />,
           <Divider />,
           <MenuItem primaryText="Usuário"
             leftIcon={<SocialPersonAdd />}
-            onClick={() => {this.selectedPath('/register/user')}}
+            onClick={() => {this.props.selectedPath('/register/user')}}
             />
         ]}
       />

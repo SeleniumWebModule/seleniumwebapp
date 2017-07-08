@@ -187,7 +187,7 @@ class RegisterScreen extends React.Component {
            </div>
            <div className='form-component' onBlur={(event) => {this.setState({system: event.target.value})}}>
              <AutoCompleteWebApp labelText='Sistema' hintText='Selecione o sistema (tela de cadastro de sistema)'
-               dataSource={this.state.systemsDS} />
+               dataSource={this.state.systemsDS} msgerror={this.state.msgerror}/>
            </div>
 
            <div className='tab'>

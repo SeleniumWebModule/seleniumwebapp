@@ -2,9 +2,6 @@ import { SELECTED_PATH } from '../constants';
 import { REGISTER_SCREEN } from '../constants';
 import { REGISTER_SYSTEM } from '../constants';
 
-let systems = [];
-let screens = [];
-
 const selectedPath = (action) => {
   return {
     currentPath: action.currentPath
@@ -25,34 +22,48 @@ const registerSystem = (action) => {
 
 let stateReducer = {
   currentPath: '',
-  updateScreen: false
+  screens: [],
+  systems: []
 }
 
 const states = (state=[], action) => {
   let currentScreen = '';
+  let screens = [];
+  let systems = [];
 
   switch(action.type) {
     case SELECTED_PATH:
-      stateReducer.currentPath = selectedPath(action).currentPath;
-      stateReducer.updateScreen = false;
+
+       stateReducer = {
+          currentPath: selectedPath(action).currentPath,
+          screens:screens,
+          systems:systems
+        }
+
       return stateReducer;
     case REGISTER_SCREEN:
+
       currentScreen = stateReducer.currentPath;
-      screens.push(registerScreen(action));
+      systems = stateReducer.systems;
+      screens = stateReducer.screens;
+      screens.push(registerScreen(action).newScreen);
       
       stateReducer = {
         currentPath: currentScreen,
-        updateScreen: true
+        systems: systems,
+        screens: screens
       }
 
       return stateReducer;
     case REGISTER_SYSTEM:
       currentScreen = stateReducer.currentPath;
-      systems.push(registerSystem(action));
+      systems = stateReducer.systems;
+      systems.push(registerSystem(action).newSystem);
 
       stateReducer = {
         currentPath: currentScreen,
-        updateScreen: true
+        systems,
+        screens
       }
 
       return stateReducer;
