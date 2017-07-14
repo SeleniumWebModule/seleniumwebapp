@@ -1,9 +1,7 @@
 import React  from 'react';
-import {PageHeader} from 'react-bootstrap';
+import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
-import IconButton from 'material-ui/IconButton';
 import DeviceDvr from 'material-ui/svg-icons/device/dvr';
-import ContentSave from 'material-ui/svg-icons/content/save';
 import AutoCompleteWebApp from '../../components/AutoComplete';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -172,15 +170,7 @@ class RegisterScreen extends React.Component {
     return (
       <div className={stateReducer.currentPath !== "/register/screen" ? 'hidden' : 'screen-style'}>
         <Panel className="pnl">
-           <PageHeader>
-             <DeviceDvr />
-             <label className="title-screen">Cadastro de Tela</label>
-             <div className="iconbtn-pageheader" onClick={() => {this.save()}}>
-               <IconButton iconStyle={this.state.iconStyles.mediumIcon} style={this.state.iconStyles.medium}>
-                 <ContentSave />
-               </IconButton>
-             </div>
-           </PageHeader>
+           <Header save={this.save.bind(this)} title="Cadastro de Tela" icon={<DeviceDvr />}/>
            <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})} ref="nameref">
               <TextField hintText="Defina o nome da tela" floatingLabelText="Nome" floatingLabelFixed={true}
                 fullWidth={true} errorText={this.state.msgerror}/>
@@ -205,10 +195,6 @@ class RegisterScreen extends React.Component {
                       <AutoCompleteWebApp labelText='Regra' hintText='Defina a regra para o evento'
                         dataSource={this.state.rulesDS} ref="ruleref"/>
                     </div>
-
-
-                        
-
 
                     <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateEvent()}} label="Associar" />
                     <AlertError ref="msgeventerrorref"/>
