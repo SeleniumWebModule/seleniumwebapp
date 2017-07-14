@@ -1,6 +1,5 @@
 import React from 'react';
 import {PageHeader} from 'react-bootstrap';
-import ActionOpenInBrowser from 'material-ui/svg-icons/action/open-in-browser';
 import IconButton from 'material-ui/IconButton';
 import ContentSave from 'material-ui/svg-icons/content/save';
 
@@ -30,7 +29,8 @@ class Header extends React.Component {
   render() {
     const Header = (
       <PageHeader>
-        <ActionOpenInBrowser />
+        {this.props.icon}
+        
         <label className="title-screen">{this.props.title}</label>
         <div className="iconbtn-pageheader" onClick={this.handleClick.bind(this)}>
           <IconButton iconStyle={this.state.iconStyles.mediumIcon} style={this.state.iconStyles.medium}>
