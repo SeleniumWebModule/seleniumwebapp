@@ -2,6 +2,7 @@ import React  from 'react';
 import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
 import TextField from 'material-ui/TextField';
+import ActionOpenInBrowser from 'material-ui/svg-icons/action/open-in-browser';
 import TableWebApp from '../../components/tables/TableWebApp';
 import TextFieldWebApp from '../../components/TextField'
 import '../../css/Screens.css';
@@ -14,7 +15,6 @@ class RegisterSystem extends React.Component {
     this.state = {
       address: '127.0.0.1 (localhost)',
       tableHeader: ["Nome", "Endereço (IP)", "Porta"],
-      tableValues: []
     };
   }
 
@@ -25,7 +25,7 @@ class RegisterSystem extends React.Component {
       return;
     }
 
-    let system = this.state.tableValues;
+    let system = this.props.states.systems;
 
     system.push({
       name: this.refs.nameref.state.value,
@@ -50,12 +50,10 @@ class RegisterSystem extends React.Component {
   render() {
     const { states } = this.props;
 
-    console.log(states)
-
     const systemScreen = (
       <div className={'screen-style'}>
         <Panel className="pnl">
-           <Header save={this.save.bind(this)} title="Cadastro de Sistema"/>
+           <Header save={this.save.bind(this)} title="Cadastro de Sistema" icon={<ActionOpenInBrowser />}/>
            <TextFieldWebApp hintText="Defina o nome do sistema" labelText="Nome" maxLength="50" 
                 fullWidth={true} ref="nameref" />
 
@@ -66,7 +64,7 @@ class RegisterSystem extends React.Component {
                 maxLength="5" ref="portref"/>
 
            <div>
-            <TableWebApp tableHeader={this.state.tableHeader} tableValues={this.state.tableValues} 
+            <TableWebApp tableHeader={this.state.tableHeader} tableValues={states.systems} 
               table={"system"}/> 
            </div>
 
