@@ -21,7 +21,7 @@ class TextFieldWebApp extends React.Component {
 	render() {
 		const text = (
 			<TextField hintText={this.props.hintText} floatingLabelText={this.props.labelText}
-                floatingLabelFixed={true} maxLength={this.props.maxLength} fullWidth={this.props.fullWidth} 
+                maxLength={this.props.maxLength} fullWidth={this.props.fullWidth} 
                 value={this.state.value} onChange={(event) => this.setState({value: event.target.value})}
                 disabled={this.props.disabled} errorText={this.state.msgerror} onFocus={() => this.setState({msgerror: ''})}/> 
 		);
