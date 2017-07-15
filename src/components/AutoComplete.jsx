@@ -19,13 +19,13 @@ class AutoCompleteWebApp extends React.Component {
   };
 
   buildDataSource() {
-    let systems = [];
+    let objects = [];
 
     this.props.dataSource.map(value => (
-      systems.push(value.name)  
+      objects.push(value.name)  
     ));
 
-    return systems;
+    return objects;
   }
 
   componentWillMount() {
