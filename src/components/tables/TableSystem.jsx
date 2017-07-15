@@ -16,12 +16,12 @@ export default class TableSystem extends React.Component {
       <Table
       selectable={false}
       fixedHeader={true}
-      tableHeader={this.props.tableHeader}
+      headersColumn={this.props.headersColumn}
       tableValues={this.props.tableValues}
       >
         <TableHeader>
           <TableRow>
-            {this.props.tableHeader.map((row) => (
+            {this.props.headersColumn.map((row) => (
               <TableHeaderColumn key={row.toString()}>{row}</TableHeaderColumn>
             ))}
           </TableRow>
