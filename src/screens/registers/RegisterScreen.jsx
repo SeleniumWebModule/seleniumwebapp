@@ -3,18 +3,13 @@ import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
 import DeviceDvr from 'material-ui/svg-icons/device/dvr';
 import AutoCompleteWebApp from '../../components/AutoComplete';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import AlertError from '../../components/AlertError';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+import TextFieldWebApp from '../../components/TextField';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import TableWebApp from '../../components/tables/TableWebApp';
+import TableEvent from '../../components/tables/TableEvent';
+import TableAttribute from '../../components/tables/TableAttribute';
+import RaisedButton from 'material-ui/RaisedButton';
+import AlertError from '../../components/AlertError'; 
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
 import { registerScreen } from '../../actions';
@@ -31,35 +26,9 @@ class RegisterScreen extends React.Component {
       attrType: '',
       attrValue: '',
       msgerrorname: '',
-      systemsDS : [
-        'Administrativo - Sistema Web',
-        'Venda - Sistema Desktop'
-      ],
-      eventsDS : [
-        'Sem Evento',
-        'Acionar ao abrir - O evento será disparado ao abrir a tela',
-        'Acionar ao fechar - O evento será disparado ao fechar a tela'
-      ],
-      rulesDS : [
-        'Sem Regra',
-        'Validar Sessão',
-        'Aguardar Tela'
-      ],
-      attrTypeDS : [
-        'Encontrar por ... (Nome da Classe, Tag ...)',
-        'Identificador (Attribute ID - Exemplo: O nome da classe em conjunto com o tipo/ valor - Encontrar Por = Nome da Classe)'
-      ],
-      attrValueDS: [
-        'Nome da Classe - ClassName',
-        'Nome da Tag - TAG name',
-        'Nome da Tela (Associar com a regra Aguardar Tela - Se não for informado utilizará a própria tela)',
-        'Valor (Attribute Value - Exemplo: Referente ao Identificador, seria o nome da classe, tag ...)'
-      ],
-      tableHeaderEvents : ['Evento', 'Regra'],
-      tableValueEvents : [],
-      tableHeaderAttrs : ['Tipo do Atributo', 'Nome do Atributo'],
-      tableValueAttrs : [],
-      msgErrorEvent: false,
+      msgeventerrorref: '',
+      headersColumnEvent : ['Evento', 'Regra'],
+      headersColumnAttr : ['Tipo do Atributo', 'Nome do Atributo'],
       stylesTab : {
         headline: {
           fontSize: 24,
@@ -83,7 +52,7 @@ class RegisterScreen extends React.Component {
   }
 
   associateEvent() {
-    if (this.state.eventName === '') {
+  /*  if (this.state.eventName === '') {
       this.showMessageError(this.refs.msgeventerrorref, "Evento Inválido!", "Os campos Evento e Regra devem ser preenchidos.");
       return;
     }
@@ -103,11 +72,11 @@ class RegisterScreen extends React.Component {
       ruleName: '',
     });
 
-    this.clearEventsFields();
+    this.clearEventsFields();*/
   }
 
   associateAttr() {
-    if (this.state.attrType === '') {
+    /*if (this.state.attrType === '') {
       this.showMessageError(this.refs.msgattrerrorref, "Atributo Inválido!", "Os campos Tipo de Atributo e Valor de Atributo devem ser preenchidos.");
       return;
     }
@@ -127,11 +96,11 @@ class RegisterScreen extends React.Component {
       attrValue: ''
     });
 
-    this.clearAttrsFields();
+    this.clearAttrsFields();*/
   }
 
   save() {
-    if (this.state.name === '') {
+   /* if (this.state.name === '') {
       this.setState({msgerrorname:'O campo nome deve ser preenchido'});
       return;
     }
@@ -143,7 +112,7 @@ class RegisterScreen extends React.Component {
       attributes: this.state.tableValueAttrs
     }
 
-    this.props.registerScreen(newScreen);
+    //this.props.registerScreen(newScreen);*/
   }
 
   clearEventsFields() {
@@ -165,122 +134,69 @@ class RegisterScreen extends React.Component {
   }
 
   render() {
-    const {stateReducer} = this.props;
+    const { states } = this.props;
 
-    return (
-      <div className={stateReducer.currentPath !== "/register/screen" ? 'hidden' : 'screen-style'}>
+    const view = (
+      <div className={'screen-style'}>
         <Panel className="pnl">
            <Header save={this.save.bind(this)} title="Cadastro de Tela" icon={<DeviceDvr />}/>
-           <div className="form-component" onBlur={(event) => this.setState({name: event.target.value})} ref="nameref">
-              <TextField hintText="Defina o nome da tela" floatingLabelText="Nome" floatingLabelFixed={true}
-                fullWidth={true} errorText={this.state.msgerror}/>
-           </div>
-           <div className='form-component' onBlur={(event) => {this.setState({system: event.target.value})}}>
-             <AutoCompleteWebApp labelText='Sistema' hintText='Selecione o sistema (tela de cadastro de sistema)'
-               dataSource={this.state.systemsDS} msgerror={this.state.msgerror}/>
-           </div>
 
-           <div className='tab'>
+           <TextFieldWebApp hintText="Defina o nome do sistema" labelText="Nome" maxLength="50" 
+              fullWidth={true} ref="nameref" />
+
+            <AutoCompleteWebApp labelText='Sistema' hintText='Selecione o sistema (tela de cadastro de sistema)'
+              dataSource={states.systems} msgerror={this.state.msgerror}/>
+
+            <div className='tab'>
               <Tabs>
                 <Tab label='Eventos' >
-                  <div>
-                    <div className='form-component' onBlur={(event) => {this.setState({eventName: event.target.value})}}
-                      onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
-                      <AutoCompleteWebApp labelText='Evento' hintText='Defina o evento' dataSource={this.state.eventsDS}
-                        ref="eventref"/>
-                    </div>
+                  <div className='form-component'  onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
+                    <AutoCompleteWebApp labelText='Evento' hintText='Selecione um evento' dataSource={[]} 
+                      ref="eventref"/>                  
+                    <AutoCompleteWebApp labelText='Regra' hintText='Selecione uma regra' dataSource={[]} 
+                      ref="ruleref"/>                  
+                  </div>
 
-                    <div className='form-component' onBlur={(event) => {this.setState({ruleName: event.target.value})}}
-                      onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
-                      <AutoCompleteWebApp labelText='Regra' hintText='Defina a regra para o evento'
-                        dataSource={this.state.rulesDS} ref="ruleref"/>
-                    </div>
-
-                    <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateEvent()}} label="Associar" />
-                    <AlertError ref="msgeventerrorref"/>
-
-                    <div>
-                      <Table
-                        selectable={true}
-                        fixedHeader={true}
-                        >
-                        <TableHeader>
-                          <TableRow>
-                            <TableHeaderColumn>Evento</TableHeaderColumn>
-                            <TableHeaderColumn>Regra</TableHeaderColumn>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody
-                          displayRowCheckbox={true}
-                          showRowHover={true}
-                          stripedRows={false}
-                        >
-                          {this.state.tableValueEvents.map( (row, index) => (
-                            <TableRow key={index}>
-                              <TableRowColumn>{row.eventName}</TableRowColumn>
-                              <TableRowColumn>{row.ruleName}</TableRowColumn>
-                            </TableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    </div>
+                  <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateEvent()}} label="Associar" />
+                  <AlertError ref="msgeventerrorref"/>
+                  <div className='form-component'>
+                    <TableWebApp tableHeader="Eventos" 
+                      table={<TableEvent headersColumn={this.state.headersColumnEvent} tableValues={states.events}/>}/> 
                   </div>
                 </Tab>
-                <Tab label="Atributos" >
-                  <div>
-                    <div className='form-component' onBlur={(event) => {this.setState({attrType: event.target.value})}}
-                      onFocus={() => {this.refs.msgattrerrorref.hideAlert()}}>
-                      <AutoCompleteWebApp labelText='Tipo do Atributo' hintText='Entre com  o tipo do atributo'
-                        dataSource={this.state.attrTypeDS} ref="attrtyperef"/>
-                    </div>
 
-                    <div className='form-component' onBlur={(event) => {this.setState({attrValue: event.target.value})}}>
-                      <AutoCompleteWebApp labelText='Valor do Atributo' hintText='Entre com o valor do atributo'
-                        dataSource={this.state.attrValueDS} ref="attrvalueref"/>
-                    </div>
+                <Tab label='Atributos' >
+                  <div className='form-component'  onFocus={() => {this.refs.msgattrerrorref.hideAlert()}}>
+                    <AutoCompleteWebApp labelText='Tipo do Atributo' hintText='Entre com  o tipo do atributo' dataSource={[]} 
+                      ref="eventref"/>                  
+                    <AutoCompleteWebApp labelText='Valor do Atributo' hintText='Entre com o valor do atributo' dataSource={[]} 
+                      ref="ruleref"/>                  
+                  </div>
 
-                    <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateAttr()}} label="Associar" />
-                    <AlertError ref="msgattrerrorref"/>
-
-                    <div>
-                      <Table
-                        selectable={true}
-                        fixedHeader={true}
-                        >
-                        <TableHeader>
-                          <TableRow>
-                            <TableHeaderColumn>Tipo do Atributo</TableHeaderColumn>
-                            <TableHeaderColumn>Valor do Atributo</TableHeaderColumn>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody
-                          displayRowCheckbox={true}
-                          showRowHover={true}
-                          stripedRows={false}
-                        >
-                          {this.state.tableValueAttrs.map( (row, index) => (
-                            <TableRow key={index}>
-                              <TableRowColumn>{row.attrType}</TableRowColumn>
-                              <TableRowColumn>{row.attrValue}</TableRowColumn>
-                            </TableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    </div>
+                  <RaisedButton primary={true} fullWidth={true} onClick={(event) => {this.associateEvent()}} label="Associar" />
+                  <AlertError ref="msgattrerrorref"/>
+                  <div className='form-component'>
+                    <TableWebApp tableHeader="Eventos" 
+                      table={<TableAttribute headersColumn={this.state.headersColumnAttr} tableValues={states.attributes}/>}/> 
                   </div>
                 </Tab>
-            </Tabs>
-          </div>
+
+              </Tabs>
+            </div>
         </Panel>
       </div>
+    )
+
+    return (
+        states.currentPath === '/register/screen' ? view : <div />
     );
   }
 }
 
-function currentState(state) {
+function currentPath(stateReducer) {
   return {
-    stateReducer: state
+    states: stateReducer
   }
 }
 
-export default connect(currentState, {registerScreen}) (RegisterScreen)
+export default connect(currentPath, {registerScreen}) (RegisterScreen)
