@@ -1,6 +1,7 @@
 import { SELECTED_PATH } from '../constants';
 import { REGISTER_SCREEN } from '../constants';
 import { REGISTER_SYSTEM } from '../constants';
+import { REGISTER_EVENT } from '../constants';
 
 export const selectedPath = (currentPath) => {
   const action = {
@@ -24,6 +25,15 @@ export const registerScreen = (newScreen) => {
   const action = {
     type: REGISTER_SCREEN,
     newScreen
+  }
+
+  return action;
+}
+
+export const registerEvent = (newSystem) => {
+  const action = {
+    type: REGISTER_EVENT,
+    newSystem
   }
 
   return action;
