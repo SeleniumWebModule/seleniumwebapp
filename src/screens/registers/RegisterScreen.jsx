@@ -6,7 +6,7 @@ import AutoCompleteWebApp from '../../components/AutoComplete';
 import TextFieldWebApp from '../../components/TextField';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import TableWebApp from '../../components/tables/TableWebApp';
-import TableEvent from '../../components/tables/TableEvent';
+import TableEventRule from '../../components/tables/TableEventRule';
 import TableAttribute from '../../components/tables/TableAttribute';
 import RaisedButton from 'material-ui/RaisedButton';
 import AlertError from '../../components/AlertError'; 
@@ -115,16 +115,6 @@ class RegisterScreen extends React.Component {
     //this.props.registerScreen(newScreen);*/
   }
 
-  clearEventsFields() {
-    this.refs.eventref.clearText();
-    this.refs.ruleref.clearText();
-  }
-
-  clearAttrsFields() {
-    this.refs.attrtyperef.clearText();
-    this.refs.attrvalueref.clearText();
-  }
-
   hideAlert() {
     this.props.hideAlert();
   }
@@ -161,7 +151,7 @@ class RegisterScreen extends React.Component {
                   <AlertError ref="msgeventerrorref"/>
                   <div className='form-component'>
                     <TableWebApp tableHeader="Eventos" 
-                      table={<TableEvent headersColumn={this.state.headersColumnEvent} tableValues={states.events}/>}/> 
+                      table={<TableEventRule headersColumn={this.state.headersColumnEvent} tableValues={states.eventRules}/>}/> 
                   </div>
                 </Tab>
 

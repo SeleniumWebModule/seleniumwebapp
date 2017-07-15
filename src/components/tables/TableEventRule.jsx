@@ -7,13 +7,11 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
- 
-export default class TableEvent extends React.Component {
+
+export default class TableEventRule extends React.Component {
   render() {
 
-    console.log('tableEvent', this.props)
-
-    const tableEvent = (
+    const tableEventRule = (
 
       <Table
       selectable={false}
@@ -36,8 +34,8 @@ export default class TableEvent extends React.Component {
           stripedRows={false}>
            {this.props.tableValues.map((row, index) => (
               <TableRow key={index}>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.value}</TableRowColumn>
+                <TableRowColumn>{row.eventName}</TableRowColumn>
+                <TableRowColumn>{row.ruleName}</TableRowColumn>
               </TableRow>
             ))}
           </TableBody>
@@ -45,7 +43,7 @@ export default class TableEvent extends React.Component {
     )
 
     return(
-      tableEvent
+      tableEventRule
     );
   }
 }
