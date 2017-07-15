@@ -4,6 +4,7 @@ import {Panel} from 'react-bootstrap';
 import TextField from 'material-ui/TextField';
 import ActionOpenInBrowser from 'material-ui/svg-icons/action/open-in-browser';
 import TableWebApp from '../../components/tables/TableWebApp';
+import TableSystem from '../../components/tables/TableSystem';
 import TextFieldWebApp from '../../components/TextField'
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
@@ -14,7 +15,7 @@ class RegisterSystem extends React.Component {
     super();
     this.state = {
       address: '127.0.0.1 (localhost)',
-      tableHeader: ["Nome", "Endereço (IP)", "Porta"],
+      headersColumn: ["Nome", "Endereço (IP)", "Porta"],
     };
   }
 
@@ -50,7 +51,7 @@ class RegisterSystem extends React.Component {
   render() {
     const { states } = this.props;
 
-    const systemScreen = (
+    const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
            <Header save={this.save.bind(this)} title="Cadastro de Sistema" icon={<ActionOpenInBrowser />}/>
@@ -64,8 +65,10 @@ class RegisterSystem extends React.Component {
                 maxLength="5" ref="portref"/>
 
            <div>
-            <TableWebApp tableHeader={this.state.tableHeader} tableValues={states.systems} 
-              table={"system"}/> 
+            <TableWebApp tableHeader="Sistemas" table={<TableSystem headersColumn={this.state.headersColumn} 
+              tableValues={states.systems}/>}
+            /> 
+
            </div>
 
         </Panel>
@@ -73,7 +76,7 @@ class RegisterSystem extends React.Component {
     )
 
     return (
-      states.currentPath === '/register/system' ? systemScreen : <div />
+      states.currentPath === '/register/system' ? view : <div />
     );
   }
 }
