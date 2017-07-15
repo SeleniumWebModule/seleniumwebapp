@@ -25,7 +25,9 @@ const registerSystem = (action) => {
 let stateReducer = {
   currentPath: '',
   screens: [],
-  systems: []
+  systems: [],
+  events: [],
+  attributes: []
 }
 
 const states = (state=[], action) => {
@@ -33,7 +35,15 @@ const states = (state=[], action) => {
   
   switch(action.type) {
     case SELECTED_PATH:
-        stateReducer.currentPath = selectedPath(action).currentPath;
+
+        stateReducer = {
+          currentPath: selectedPath(action).currentPath,
+          screens: stateReducer.screens === undefined ? [] : stateReducer.screens,
+          systems: stateReducer.systems === undefined ? [] : stateReducer.systems,
+          events: stateReducer.events === undefined ? [] : stateReducer.events,
+          attributes: stateReducer.attributes === undefined ? [] : stateReducer.attributes
+        }
+
         bake_cookie('stateReducer', stateReducer);
       return stateReducer;
     case REGISTER_SCREEN:
