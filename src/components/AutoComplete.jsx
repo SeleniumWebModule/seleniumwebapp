@@ -18,11 +18,21 @@ class AutoCompleteWebApp extends React.Component {
     });
   };
 
+  buildDataSource() {
+    let systems = [];
+
+    this.props.dataSource.map(value => (
+      systems.push(value.name)  
+    ));
+
+    return systems;
+  }
+
   componentWillMount() {
     this.setState({
       labelText: this.props.labelText,
       hintText: this.props.hintText,
-      dataSource: this.props.dataSource
+      dataSource: this.buildDataSource()
     });
   }
 
@@ -33,6 +43,9 @@ class AutoCompleteWebApp extends React.Component {
   }
 
   render() {
+
+    this.buildDataSource();
+
     return(
       <AutoComplete
         hintText={this.state.hintText}
@@ -42,7 +55,6 @@ class AutoCompleteWebApp extends React.Component {
         dataSource={this.state.dataSource}
         floatingLabelText={this.state.labelText}
         fullWidth={true}
-        floatingLabelFixed={true}
         filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
         openOnFocus={true} />
     );
