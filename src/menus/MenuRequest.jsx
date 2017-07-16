@@ -4,7 +4,7 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
 import CommunicationContactPhone from 'material-ui/svg-icons/communication/contact-phone';
 import ActionGavel from 'material-ui/svg-icons/action/gavel';
-import ActionEvent from 'material-ui/svg-icons/action/event';
+import ActionTouchApp from 'material-ui/svg-icons/action/touch-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import ActionBuild from 'material-ui/svg-icons/action/build';
 import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
@@ -40,7 +40,7 @@ class MenuRequest extends React.Component {
                 onClick={() => {this.selectedPath('/request/rule')}}
               />,
             <MenuItem primaryText="Evento"
-                leftIcon={<ActionEvent />}
+                leftIcon={<ActionTouchApp />}
                 onClick={() => {this.selectedPath('/request/event')}}
               />,
             <MenuItem primaryText="Relatório"
