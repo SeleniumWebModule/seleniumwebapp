@@ -2,6 +2,7 @@ import { SELECTED_PATH } from '../constants';
 import { REGISTER_SCREEN } from '../constants';
 import { REGISTER_SYSTEM } from '../constants';
 import { REGISTER_EVENT } from '../constants';
+import { REGISTER_RULE } from '../constants';
 
 import { bake_cookie, read_cookie } from 'sfcookies';
 
@@ -25,7 +26,13 @@ const registerSystem = (action) => {
 
 const registerEvent = (action) => {
   return {
-    newSystem: action.newSystem
+    newEvent: action.newEvent
+  }
+}
+
+const registerRule = (action) => {
+  return {
+    newRule: action.newRule
   }
 }
 
@@ -34,7 +41,9 @@ let stateReducer = {
   screens: [],
   systems: [],
   events: [],
+  rules: [],
   eventRules: [],
+  eventAttributes: [],
   attributes: []
 }
 
@@ -49,7 +58,9 @@ const states = (state=[], action) => {
           screens: stateReducer.screens === undefined ? [] : stateReducer.screens,
           systems: stateReducer.systems === undefined ? [] : stateReducer.systems,
           events: stateReducer.events === undefined ? [] : stateReducer.events,
+          rules: stateReducer.rules === undefined ? [] : stateReducer.rules,
           eventRules: stateReducer.eventRules === undefined ? [] : stateReducer.eventRules,
+          eventAttributes: stateReducer.eventAttributes === undefined ? [] : stateReducer.eventAttributes,
           attributes: stateReducer.attributes === undefined ? [] : stateReducer.attributes
         }
 
@@ -64,7 +75,11 @@ const states = (state=[], action) => {
       bake_cookie('stateReducer', stateReducer);
       return stateReducer;
     case REGISTER_EVENT:
-      stateReducer.events.push(registerEvent(action).newSystem);
+      stateReducer.events.push(registerEvent(action).newEvent);
+      bake_cookie('stateReducer', stateReducer);
+      return stateReducer;
+    case REGISTER_RULE:
+      stateReducer.rules.push(registerRule(action).newRule);
       bake_cookie('stateReducer', stateReducer);
       return stateReducer;
     default:
