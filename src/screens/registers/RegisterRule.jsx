@@ -1,21 +1,21 @@
 import React  from 'react';
 import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
-import ActionTouchApp from 'material-ui/svg-icons/action/touch-app'
+import ActionGavel from 'material-ui/svg-icons/action/gavel';
 import TableWebApp from '../../components/tables/TableWebApp';
-import TableEvent from '../../components/tables/TableEvent';
+import TableRule from '../../components/tables/TableRule';
 import TextFieldWebApp from '../../components/TextField'
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
-import { registerEvent } from '../../actions';
+import { registerRule } from '../../actions';
 
-class RegisterEvent extends React.Component {
+class RegisterRule extends React.Component {
   constructor() {
     super();
     this.state = {
       name: '',
       description: '',
-      headersColumn: ["Nome", "Descrição"],
+      headersColumn: ["Nome", "Valor"],
     };
   }
 
@@ -38,7 +38,7 @@ class RegisterEvent extends React.Component {
       description: this.refs.descref.state.value,
     });
 
-    this.props.registerEvent({
+    this.props.registerRule({
       name: this.refs.nameref.state.value,
       description: this.refs.descref.state.value,
     });
@@ -53,16 +53,16 @@ class RegisterEvent extends React.Component {
     const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
-           <Header save={this.save.bind(this)} title="Cadastro de Evento" icon={<ActionTouchApp />}/>
-           <TextFieldWebApp hintText="Defina o nome do evento" labelText="Nome" maxLength="80" 
+           <Header save={this.save.bind(this)} title="Cadastro de Regra" icon={<ActionGavel />}/>
+           <TextFieldWebApp hintText="Defina um nome para a regra" labelText="Nome" maxLength="80" 
                 fullWidth={true} ref="nameref" />
            
-           <TextFieldWebApp hintText="Entre com informações relevantes sobre o evento" labelText="Descrição" style={{marginLeft:"2%"}} 
+           <TextFieldWebApp hintText="Entre com informações relevantes sobre a regra"
                 fullWidth={true} maxLength="80" ref="descref"/>
 
            <div>
-            <TableWebApp tableHeader="Eventos" table={<TableEvent headersColumn={this.state.headersColumn} fullWidth={true}
-              tableValues={states.events}/>}
+            <TableWebApp tableHeader="Regras" table={<TableRule headersColumn={this.state.headersColumn} fullWidth={true}
+              tableValues={states.rules}/>}
             /> 
 
            </div>
@@ -72,7 +72,7 @@ class RegisterEvent extends React.Component {
     )
 
     return (
-      states.currentPath === '/register/event' ? view : <div />
+      states.currentPath === '/register/rule' ? view : <div />
     );
   }
 }
@@ -83,4 +83,4 @@ function currentPath(stateReducer) {
   }
 }
 
-export default connect(currentPath, {registerEvent}) (RegisterEvent)
+export default connect(currentPath, {registerRule}) (RegisterRule)

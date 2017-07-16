@@ -4,6 +4,7 @@ import RegisterSystem from './registers/RegisterSystem';
 import RegisterScreen from './registers/RegisterScreen';
 import RegisterComponent from './registers/RegisterComponent';
 import RegisterEvent from './registers/RegisterEvent';
+import RegisterRule from './registers/RegisterRule';
 import RegisterUser from './registers/RegisterUser'; 
 import RequestRule from './requests/RequestRule';
 import RequestTest from './requests/RequestTest';
@@ -27,6 +28,7 @@ class Screens extends React.Component {
           <RegisterScreen />
           <RegisterComponent />
           <RegisterEvent />
+          <RegisterRule />
           <RegisterUser />
 
           <RequestRule />

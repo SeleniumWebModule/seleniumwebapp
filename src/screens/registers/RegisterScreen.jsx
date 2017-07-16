@@ -141,9 +141,9 @@ class RegisterScreen extends React.Component {
               <Tabs>
                 <Tab label='Eventos' >
                   <div className='form-component'  onFocus={() => {this.refs.msgeventerrorref.hideAlert()}}>
-                    <AutoCompleteWebApp labelText='Evento' hintText='Selecione um evento' dataSource={[]} 
+                    <AutoCompleteWebApp labelText='Evento' hintText='Selecione um evento' dataSource={states.events} 
                       ref="eventref"/>                  
-                    <AutoCompleteWebApp labelText='Regra' hintText='Selecione uma regra' dataSource={[]} 
+                    <AutoCompleteWebApp labelText='Regra' hintText='Selecione uma regra' dataSource={states.rules} 
                       ref="ruleref"/>                  
                   </div>
 
@@ -157,7 +157,7 @@ class RegisterScreen extends React.Component {
 
                 <Tab label='Atributos' >
                   <div className='form-component'  onFocus={() => {this.refs.msgattrerrorref.hideAlert()}}>
-                    <AutoCompleteWebApp labelText='Tipo do Atributo' hintText='Entre com  o tipo do atributo' dataSource={[]} 
+                    <AutoCompleteWebApp labelText='Nome do Atributo' hintText='Entre com  o nome do atributo' dataSource={[]} 
                       ref="eventref"/>                  
                     <AutoCompleteWebApp labelText='Valor do Atributo' hintText='Entre com o valor do atributo' dataSource={[]} 
                       ref="ruleref"/>                  
@@ -167,7 +167,7 @@ class RegisterScreen extends React.Component {
                   <AlertError ref="msgattrerrorref"/>
                   <div className='form-component'>
                     <TableWebApp tableHeader="Eventos" 
-                      table={<TableAttribute headersColumn={this.state.headersColumnAttr} tableValues={states.attributes}/>}/> 
+                      table={<TableAttribute headersColumn={this.state.headersColumnAttr} tableValues={states.eventAttributes}/>}/> 
                   </div>
                 </Tab>
 
