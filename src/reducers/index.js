@@ -3,6 +3,7 @@ import { REGISTER_SCREEN } from '../constants';
 import { REGISTER_SYSTEM } from '../constants';
 import { REGISTER_EVENT } from '../constants';
 import { REGISTER_RULE } from '../constants';
+import { REGISTER_ATTRIBUTE} from '../constants';
 
 import { bake_cookie, read_cookie } from 'sfcookies';
 
@@ -33,6 +34,12 @@ const registerEvent = (action) => {
 const registerRule = (action) => {
   return {
     newRule: action.newRule
+  }
+}
+
+const registerAttribute = (action) => {
+  return {
+    newAttribute: action.newAttribute
   }
 }
 
@@ -82,6 +89,10 @@ const states = (state=[], action) => {
       stateReducer.rules.push(registerRule(action).newRule);
       bake_cookie('stateReducer', stateReducer);
       return stateReducer;
+    case REGISTER_ATTRIBUTE:
+    stateReducer.attributes.push(registerAttribute(action).newAttribute);
+    bake_cookie('stateReducer', stateReducer);
+    return stateReducer;
     default:
       return states;
   }

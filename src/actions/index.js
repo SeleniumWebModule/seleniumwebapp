@@ -3,6 +3,7 @@ import { REGISTER_SCREEN } from '../constants';
 import { REGISTER_SYSTEM } from '../constants';
 import { REGISTER_EVENT } from '../constants';
 import { REGISTER_RULE } from '../constants';
+import { REGISTER_ATTRIBUTE } from '../constants';
 
 export const selectedPath = (currentPath) => {
   const action = {
@@ -44,6 +45,15 @@ export const registerRule = (newRule) => {
   const action = {
     type: REGISTER_RULE,
     newRule
+  }
+
+  return action;
+}
+
+export const registerAttribute = (newAttribute) => {
+  const action = {
+    type: REGISTER_ATTRIBUTE,
+    newAttribute
   }
 
   return action;
