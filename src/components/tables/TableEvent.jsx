@@ -11,8 +11,6 @@ import {
 export default class TableEvent extends React.Component {
   render() {
 
-    console.log('tableEvent', this.props)
-
     const tableEvent = (
 
       <Table
@@ -37,7 +35,7 @@ export default class TableEvent extends React.Component {
            {this.props.tableValues.map((row, index) => (
               <TableRow key={index}>
                 <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.value}</TableRowColumn>
+                <TableRowColumn>{row.description}</TableRowColumn>
               </TableRow>
             ))}
           </TableBody>
