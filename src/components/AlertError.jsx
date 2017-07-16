@@ -20,7 +20,6 @@ export default class AlertError extends React.Component {
   }
 
   hideAlert() {
-    console.log('call ....');
     this.setState({
       style: {display: 'none'}
     });
