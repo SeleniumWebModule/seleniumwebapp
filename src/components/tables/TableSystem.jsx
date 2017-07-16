@@ -10,9 +10,7 @@ import {
 
 export default class TableSystem extends React.Component {
   render() {
-
     const tableSystem = (
-
       <Table
       selectable={false}
       fixedHeader={true}
