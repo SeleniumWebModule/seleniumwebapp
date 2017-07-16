@@ -31,9 +31,9 @@ class RegisterRule extends React.Component {
         return;
     }    
 
-    let events = this.props.states.events;
+    let rules = this.props.states.rules;
 
-    events.push({
+    rules.push({
       name: this.refs.nameref.state.value,
       description: this.refs.descref.state.value,
     });

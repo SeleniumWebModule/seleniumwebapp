@@ -7,6 +7,7 @@ import ImagePhotoAlbum from 'material-ui/svg-icons/image/photo-album';
 import ActionOpenInBrowser from 'material-ui/svg-icons/action/open-in-browser';
 import ActionTouchApp from 'material-ui/svg-icons/action/touch-app';
 import ActionGavel from 'material-ui/svg-icons/action/gavel';
+import AvLibraryBooks from 'material-ui/svg-icons/av/library-books';
 import DeviceDvr from 'material-ui/svg-icons/device/dvr';
 import SocialPersonAdd from 'material-ui/svg-icons/social/person-add';
 import { connect } from 'react-redux';
@@ -35,13 +36,17 @@ class MenuRegister extends React.Component {
             onClick ={() => {this.props.selectedPath('/register/component')}}
             />,
           <Divider />,
-          <MenuItem primaryText="Eventos"
+          <MenuItem primaryText="Evento"
             leftIcon={<ActionTouchApp />}
             onClick ={() => {this.props.selectedPath('/register/event')}}
           />,
-          <MenuItem primaryText="Regras"
+          <MenuItem primaryText="Regra"
             leftIcon={<ActionGavel />}
             onClick ={() => {this.props.selectedPath('/register/rule')}}
+          />,
+          <MenuItem primaryText="Atributo"
+            leftIcon={<AvLibraryBooks />}
+            onClick ={() => {this.props.selectedPath('/register/attribute')}}
           />,
           <Divider />,
           <MenuItem primaryText="Usuário"

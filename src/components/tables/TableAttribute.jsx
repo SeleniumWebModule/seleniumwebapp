@@ -12,7 +12,6 @@ export default class TableAttribute extends React.Component {
   render() {
 
     const tableAttribute = (
-
       <Table
       selectable={false}
       fixedHeader={true}
@@ -34,8 +33,8 @@ export default class TableAttribute extends React.Component {
           stripedRows={false}>
            {this.props.tableValues.map((row, index) => (
               <TableRow key={index}>
-                <TableRowColumn>{row.attrType}</TableRowColumn>
-                <TableRowColumn>{row.attrValue}</TableRowColumn>
+                <TableRowColumn>{row.name}</TableRowColumn>
+                <TableRowColumn>{row.value}</TableRowColumn>
               </TableRow>
             ))}
           </TableBody>
