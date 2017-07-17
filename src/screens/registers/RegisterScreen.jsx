@@ -29,25 +29,6 @@ class RegisterScreen extends React.Component {
       msgeventerrorref: '',
       headersColumnEvent : ['Evento', 'Regra'],
       headersColumnAttr : ['Tipo do Atributo', 'Nome do Atributo'],
-      stylesTab : {
-        headline: {
-          fontSize: 24,
-          paddingTop: 16,
-          marginBottom: 12,
-          fontWeight: 400,
-        },
-      },
-      iconStyles : {
-        mediumIcon: {
-          width: 38,
-          height: 48,
-        },
-        medium : {
-          width: 86,
-          height: 86,
-          padding: 14,
-        }
-      }
     }
   }
 

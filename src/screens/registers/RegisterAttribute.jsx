@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import {Panel} from 'react-bootstrap';
 import AvLibraryBooks from 'material-ui/svg-icons/av/library-books';
 import TableWebApp from '../../components/tables/TableWebApp';
-import TableAttribute from '../../components/tables/TableRule';
+import TableAttribute from '../../components/tables/TableAttribute';
 import TextFieldWebApp from '../../components/TextField'
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
@@ -50,8 +50,6 @@ class RegisterAttribute extends React.Component {
 
   render() {
     const { states } = this.props;
-
-    console.log(states);
 
     const view = (
       <div className={'screen-style'}>
