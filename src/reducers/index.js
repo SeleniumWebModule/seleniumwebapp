@@ -4,6 +4,7 @@ import { REGISTER_SYSTEM } from '../constants';
 import { REGISTER_EVENT } from '../constants';
 import { REGISTER_RULE } from '../constants';
 import { REGISTER_ATTRIBUTE} from '../constants';
+import { REGISTER_COMPONENT} from '../constants';
 
 import { bake_cookie, read_cookie } from 'sfcookies';
 
@@ -43,12 +44,19 @@ const registerAttribute = (action) => {
   }
 }
 
+const registerComponent = (action) => {
+  return {
+    newComponent: action.newComponent
+  }
+}
+
 let stateReducer = {
   currentPath: '',
   screens: [],
   systems: [],
   events: [],
   rules: [],
+  components: [],
   eventRules: [],
   eventAttributes: [],
   attributes: []
@@ -68,7 +76,8 @@ const states = (state=[], action) => {
           rules: stateReducer.rules === undefined ? [] : stateReducer.rules,
           eventRules: stateReducer.eventRules === undefined ? [] : stateReducer.eventRules,
           eventAttributes: stateReducer.eventAttributes === undefined ? [] : stateReducer.eventAttributes,
-          attributes: stateReducer.attributes === undefined ? [] : stateReducer.attributes
+          attributes: stateReducer.attributes === undefined ? [] : stateReducer.attributes,
+          components: stateReducer.components === undefined ? [] : stateReducer.components
         }
 
         bake_cookie('stateReducer', stateReducer);
@@ -90,9 +99,13 @@ const states = (state=[], action) => {
       bake_cookie('stateReducer', stateReducer);
       return stateReducer;
     case REGISTER_ATTRIBUTE:
-    stateReducer.attributes.push(registerAttribute(action).newAttribute);
-    bake_cookie('stateReducer', stateReducer);
-    return stateReducer;
+      stateReducer.attributes.push(registerAttribute(action).newAttribute);
+      bake_cookie('stateReducer', stateReducer);
+      return stateReducer;
+    case REGISTER_COMPONENT:
+      stateReducer.components.push(registerComponent(action).newComponent);
+      bake_cookie('stateReducer', stateReducer);
+      return stateReducer;
     default:
       return states;
   }

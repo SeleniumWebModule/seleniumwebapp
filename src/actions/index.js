@@ -4,6 +4,7 @@ import { REGISTER_SYSTEM } from '../constants';
 import { REGISTER_EVENT } from '../constants';
 import { REGISTER_RULE } from '../constants';
 import { REGISTER_ATTRIBUTE } from '../constants';
+import { REGISTER_COMPONENT } from '../constants';
 
 export const selectedPath = (currentPath) => {
   const action = {
@@ -54,6 +55,15 @@ export const registerAttribute = (newAttribute) => {
   const action = {
     type: REGISTER_ATTRIBUTE,
     newAttribute
+  }
+
+  return action;
+}
+
+export const registerComponent = (newComponent) => {
+  const action = {
+    type: REGISTER_COMPONENT,
+    newComponent
   }
 
   return action;
