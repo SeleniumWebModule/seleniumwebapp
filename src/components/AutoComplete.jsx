@@ -59,7 +59,7 @@ class AutoCompleteWebApp extends React.Component {
         onNewRequest={this.handleNewRequest}
         dataSource={this.state.dataSource}
         floatingLabelText={this.state.labelText}
-        fullWidth={true} errorText={this.state.msgerror} onFocus={() => this.setState({msgerror: ''})}
+        fullWidth={this.props.fullWidth} errorText={this.state.msgerror} onFocus={() => this.setState({msgerror: ''})}
         filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
         openOnFocus={true} />
     );
