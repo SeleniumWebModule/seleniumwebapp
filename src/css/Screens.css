@@ -3,10 +3,8 @@
 }
 
 .screen-style {
-  margin-top: 1%;
   font-size: 20px;
-  width: 80%;
-  margin-left: 9%;
+  margin: 2%;
 }
 
 .label {
@@ -19,6 +17,16 @@
   float: right;
 }
 
+.frm {
+  margin: 2%;
+}
+
+.table {
+  margin-top: 3%;
+  margin-left: 2%;
+  width: 95%;
+}
+
 .title-screen {
   font-family: cursive;
   margin-left: 2%;
@@ -26,6 +34,7 @@
 
 .pnl {
     text-align: left;
+    margin: 2%;
 }
 
 .form-label-component {
@@ -36,9 +45,8 @@
 }
 
 .form-component {
-  margin-left: 2%;
-  margin-right: 3%;
-  color: black;
+  margin: 10%;
+  
   font-family: monospace;
   font-size: 24px;
 }

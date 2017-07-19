@@ -2,6 +2,7 @@ body {
   background: #E0E0E0;
   font-family: sans-serif;
   color: #111;
+
 }
 
 .menu {
@@ -11,9 +12,15 @@ body {
 .Overview {
   text-align: center;
   padding: 2%;
+  margin: 2%;
 }
 
 .Overview-title {
   font-size: 40px;
   margin-bottom: 2%;
+}
+
+.views {
+  height: 800px;
+  overflow: auto;
 }
