@@ -28,7 +28,8 @@ export default class TableValuesAssociated extends React.Component {
 
         </TableHeader>
         <TableBody
-          displayRowCheckbox={true}
+          displayRowCheckbox={false}
+          showCheckbox={false}
           showRowHover={true}
           stripedRows={false}>
            {this.props.tableValues.map((row, index) => (
