@@ -54,23 +54,24 @@ class RegisterSystem extends React.Component {
     const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
-           <Header save={this.save.bind(this)} title="Cadastro de Sistema" icon={<ActionOpenInBrowser />}/>
-           <TextFieldWebApp hintText="Defina o nome do sistema" labelText="Nome" maxLength="50" 
+          <div>
+            <Header save={this.save.bind(this)} title="Cadastro de Sistema" icon={<ActionOpenInBrowser />}/>
+          </div>
+          <div className='frm'>
+              <TextFieldWebApp hintText="Defina o nome do sistema" labelText="Nome" maxLength="50" 
                 fullWidth={true} ref="nameref" />
+              
+              <TextField style={{marginRight: '10%'}} floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value={this.state.address} 
+                disabled />
+               
+              <TextFieldWebApp hintText="Default 8080" labelText="Porta"  maxLength="5" ref="portref"/>
 
-           <TextField floatingLabelText="Endereço (IP)" floatingLabelFixed={true} value={this.state.address} 
-                disabled/>
-           
-           <TextFieldWebApp hintText="Default 8080" labelText="Porta" style={{marginLeft:"2%"}} 
-                maxLength="5" ref="portref"/>
-
-           <div>
-            <TableWebApp tableHeader="Sistemas" table={<TableSystem headersColumn={this.state.headersColumn} 
-              tableValues={states.systems}/>}
-            /> 
-
-           </div>
-
+            <div className="table">
+              <TableWebApp tableHeader="Sistemas" table={<TableSystem headersColumn={this.state.headersColumn} 
+                tableValues={states.systems}/>}
+              /> 
+            </div>
+          </div>
         </Panel>
       </div>
     )

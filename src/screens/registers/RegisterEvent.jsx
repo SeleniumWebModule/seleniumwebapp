@@ -53,20 +53,22 @@ class RegisterEvent extends React.Component {
     const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
-           <Header save={this.save.bind(this)} title="Cadastro de Evento" icon={<ActionTouchApp />}/>
-           <TextFieldWebApp hintText="Defina o nome do evento" labelText="Nome" maxLength="80" 
-                fullWidth={true} ref="nameref" />
+          <div>
+            <Header save={this.save.bind(this)} title="Cadastro de Evento" icon={<ActionTouchApp />}/>
+          </div>
+          <div className="frm">
+            <TextFieldWebApp hintText="Defina o nome do evento" labelText="Nome" maxLength="80" 
+              fullWidth={true} ref="nameref" />
            
-           <TextFieldWebApp hintText="Entre com informações relevantes sobre o evento" labelText="Descrição" style={{marginLeft:"2%"}} 
-                fullWidth={true} maxLength="80" ref="descref"/>
+            <TextFieldWebApp hintText="Entre com informações relevantes sobre o evento" labelText="Descrição" textArea={true}
+              fullWidth={true} rows={5} maxRows={5} ref="descref"/>
 
-           <div>
-            <TableWebApp tableHeader="Eventos" table={<TableEvent headersColumn={this.state.headersColumn} fullWidth={true}
-              tableValues={states.events}/>}
-            /> 
-
-           </div>
-
+            <div classname="table">
+              <TableWebApp tableHeader="Eventos" table={<TableEvent headersColumn={this.state.headersColumn} fullWidth={true}
+                tableValues={states.events}/>}
+              /> 
+            </div>
+          </div>
         </Panel>
       </div>
     )

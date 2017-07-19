@@ -51,25 +51,30 @@ class RegisterAttribute extends React.Component {
   render() {
     const { states } = this.props;
 
+    console.log('states from attribute', states)
+
     const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
+          <div>
            <Header save={this.save.bind(this)} title="Cadastro de Atributo" icon={<AvLibraryBooks />}/>
-           <TextFieldWebApp hintText="Defina um nome para o atributo" labelText="Nome" maxLength="80" 
-                fullWidth={true} ref="nameref" />
+          </div>
+          <div className="frm">
+            <TextFieldWebApp hintText="Defina um nome para o atributo" labelText="Nome" maxLength="80" 
+              fullWidth={true} ref="nameref" />
 
             <TextFieldWebApp hintText="Defina um valor para o atributo" labelText="Valor" maxLength="80" 
-                fullWidth={true} ref="valueref" />
+              fullWidth={true} ref="valueref" />
            
-           <TextFieldWebApp labelText="Entre com informações relevantes sobre o atributo"
-                fullWidth={true} ref="descref" textArea={true} rows={5} />
+            <TextFieldWebApp labelText="Descrição" hintText="Entre com informações relevantes sobre o atributo" 
+              fullWidth={true} ref="descref" textArea={true} rows={5} maxRows={5}/>
 
            <div>
             <TableWebApp tableHeader="Atributos" table={<TableAttribute headersColumn={this.state.headersColumn} 
               fullWidth={true} tableValues={states.attributes} />}
             /> 
-
            </div>
+          </div>
         </Panel>
       </div>
     )
