@@ -10,7 +10,9 @@ class Overview extends Component {
       <div className="Overview">
 
           <Toolbar />
-          <Screens />
+          <div className="views">
+          	<Screens />
+          </div>
       </div>
     );
   }
