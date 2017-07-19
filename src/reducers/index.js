@@ -50,6 +50,20 @@ const registerComponent = (action) => {
   }
 }
 
+const attributesInit = () => {
+  return [
+    {name: 'FindBy', value: 'CLASS_NAME', description: 'Informa que o componente ou a tela poderão ser encontradas pelo Selenium pelo atributo CLASS_NAME'},
+    {name: 'FindBy', value: 'NAME', description: 'Informa que o componente ou a tela poderão ser encontrados pelo Selenium pelo atributo NAME'},
+    {name: 'FindBy', value: 'TAG_NAME', description: 'Informa que o componente ou a tela poderão ser encontrados pelo Selenium pelo atributo TAG_NAME'},
+    {name: 'FindBy', value: 'ID', description: 'Informa que o componente ou a tela poderão ser encontrados pelo Selenium pelo atributo ID'},
+    {name: 'WaitFor', value: 'COMPONENT', description: 'Configura um componente ou tela a esperar por um componente.'},
+    {name: 'WaitFor', value: 'SCREEN', description: 'Configura um componente ou tela a esperar por uma tela'},
+    {name: 'SleepTimeUnit', value: 'SECONDS', description: 'Configura um componente ou tela a esperar por x segundos para uma nova tentativa'},
+    {name: 'SleepTimeUnit', value: 'MINUTES', description: 'Configura um componente ou tela a esperar por x minutos para uma nova tentativa'},
+    {name: 'SleepTimeValue', value: '30', description: 'Configura para que um componente ou tela aguarde por 30 segundos até uma nova tentativa, o atributo SleepTimeUnit deve estar associado com o valor SECONDS, que é comportamento padrão.'}
+  ]
+}
+
 let stateReducer = {
   currentPath: '',
   screens: [],
@@ -67,7 +81,6 @@ const states = (state=[], action) => {
   
   switch(action.type) {
     case SELECTED_PATH:
-
         stateReducer = {
           currentPath: selectedPath(action).currentPath,
           screens: stateReducer.screens === undefined ? [] : stateReducer.screens,
@@ -76,7 +89,8 @@ const states = (state=[], action) => {
           rules: stateReducer.rules === undefined ? [] : stateReducer.rules,
           eventRules: stateReducer.eventRules === undefined ? [] : stateReducer.eventRules,
           eventAttributes: stateReducer.eventAttributes === undefined ? [] : stateReducer.eventAttributes,
-          attributes: stateReducer.attributes === undefined ? [] : stateReducer.attributes,
+          attributes: (stateReducer.attributes === undefined || stateReducer.attributes.lenght === 0)? 
+            attributesInit : stateReducer.attributes,
           components: stateReducer.components === undefined ? [] : stateReducer.components
         }
 
