@@ -104,8 +104,6 @@ class RegisterComponent extends React.Component {
   render() {
     const { states } = this.props;
 
-    console.log(states)
-
     const view = (
       <div className={'screen-style'}>
         <Panel className="pnl">
