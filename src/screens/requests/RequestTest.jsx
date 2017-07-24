@@ -3,20 +3,17 @@ import {Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import AvPlaylistAddCheck from 'material-ui/svg-icons/av/playlist-add-check';
 import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
 import Header from '../../components/Header';
-import {Panel, Accordion, Collapse, Well} from 'react-bootstrap';
+import {Panel, Collapse, Well, ListGroup, ListGroupItem} from 'react-bootstrap';
 import TableWebApp from '../../components/tables/TableWebApp';
 import TableValuesAssociated from '../../components/tables/TableValuesAssociated';
 import RaisedButton from 'material-ui/RaisedButton';
 import AlertInfo from '../../components/AlertInfo'; 
+import AlertSuccess from '../../components/AlertSuccess'; 
 import AutoCompleteWebApp from '../../components/AutoComplete';
-import Subheader from 'material-ui/Subheader';
-import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
-import TableRule from '../../components/tables/TableRule';
 import Toggle from 'material-ui/Toggle';
+import Divider from 'material-ui/Divider';
 import '../../css/Screens.css';
 import { connect } from 'react-redux';
 
@@ -25,9 +22,9 @@ class RequestTest extends React.Component {
  constructor() {
     super();
     this.state = ({
-      system: '',
-      screen: '',
-      component: '',
+      currentSystem: '',
+      currentScreen: '',
+      currentComponent: '',
       currentEvent: '',
       loadDefaultRulesForCurrentEvent: false,
       currentRule: '',
@@ -39,37 +36,43 @@ class RequestTest extends React.Component {
       headersColumnComponentAttributes:["Nome"],
       msgintro: "Para começar um caso de teste é necessário informar um sistema e uma tela. " +
       "Outras informações são requeridas, o sistema irá orientar em cada passo.",
-      msgintrotest: "Para gerar o caso de teste é necessário fazer algumas associações. A associação com o componente é requerida " +
-      "Comece associando os componentes com a tela, o sistema irá te acompanhar em cada etapa, clique em Próximo para continuar.",
       msgintrocomponent: "Os componentes serão associados com a tela, associe um ou mais componentes, você deverá informar no mínimo " +
       "um. Os componentes dependem de outras associações. O sistema irá te acompanhar em cada etapa.",
-      msgintroevent: "Os eventos são os responsáveis por dispararem ações em um componente ou tela, cada evento deve ter uma ou mais " +
+      msgintrocomponentevent: "Os eventos são os responsáveis por dispararem ações em um componente ou tela, cada evento deve ter uma ou mais " +
       "regras associadas. clique em Próximo para continuar.",
-      msgintrorule: "As regras são responsáveis pelo comportamento esperado pelo componente, elas que irão validar a funcionalidade " + 
+      msgintrocomponenteventrule: "As regras são responsáveis pelo comportamento esperado pelo componente, elas que irão validar a funcionalidade " + 
       " disparada pelo evento. ",
       finished: false,
       stepIndex: 0,
       stepIndexComponent: 0,
       finishedComponent: false,
-      stepIndexEvent: 0,
-      finishedEvent: false,
-      stepIndexRule: 0,
-      finishedRule: false,
+      stepIndexComponentEvent: 0,
+      finishedComponentEvent: false,
+      stepIndexComponentEventRule: 0,
+      finishedComponentEventRule: false,
       initialize: false
     })
   }
 
-  associateComponentEventRules() {
-    console.log("associateComponentEvent");
+  associateComponentEventRules(event) {
+    let rules = this.state.componentEventRules;
+    rules.push({name: event.target.value})
+
+    this.setState({
+      componentEventRules: rules,
+      currentRule: ''
+    });
+
+    this.refs.ruleref.clearText();
   }
 
   associateComponentAttribute(event) {
-    const algo = {
+    const attribute = {
       name: event.target.value
     }
 
     let attributes = this.state.componentAttributes;
-    attributes.push(algo);
+    attributes.push(attribute);
 
     this.setState({
       componentAttributes: attributes
@@ -97,21 +100,21 @@ class RequestTest extends React.Component {
     });
   };
 
-  handleNextEvent = () => {
-    const {stepIndexEvent} = this.state;
+  handleNextComponentEvent = () => {
+    const {stepIndexComponentEvent} = this.state;
 
     this.setState({
-      stepIndexEvent: stepIndexEvent + 1,
-      finishedEvent: stepIndexEvent >= 3,
+      stepIndexComponentEvent: stepIndexComponentEvent + 1,
+      finishedComponentEvent: stepIndexComponentEvent >= 3,
     });
   };
 
-  handleNextRule = () => {
-    const {stepIndexRule} = this.state;
+  handleNextComponentEventRule = () => {
+    const {stepIndexComponentEventRule} = this.state;
 
     this.setState({
-      stepIndexRule: stepIndexRule + 1,
-      finishedRule: stepIndexRule >= 4,
+      stepIndexComponentEventRule: stepIndexComponentEventRule + 1,
+      finishedComponentEventRule: stepIndexComponentEventRule >= 3,
     });
   };
 
@@ -124,43 +127,69 @@ class RequestTest extends React.Component {
 
   handlePrevComponent = () => {
     const {stepIndexComponent} = this.state;
+
     if (stepIndexComponent > 0) {
       this.setState({stepIndexComponent: stepIndexComponent - 1});
     }
   };
 
-  handlePrevEvent = () => {
-    const {stepIndexEvent} = this.state;
-    if (stepIndexEvent > 0) {
-      this.setState({stepIndexEvent: stepIndexEvent - 1});
+  handlePrevComponentEvent = () => {
+    const {stepIndexComponentEvent} = this.state;
+
+    if (stepIndexComponentEvent > 0) {
+      this.setState({stepIndexComponentEvent: stepIndexComponentEvent - 1});
     }
   };
 
-  handlePrevRule = () => {
-    const {stepIndexRule} = this.state;
-    if (stepIndexRule > 0) {
-      this.setState({stepIndexRule: stepIndexRule - 1});
+  handlePrevComponentEventRule = () => {
+    const {stepIndexComponentEventRule} = this.state;
+
+    if (stepIndexComponentEventRule > 0) {
+      this.setState({stepIndexComponentEventRule: stepIndexComponentEventRule - 1});
     }
   };
+
+  handleFinishComponentEventRulesAssociation = () => {
+    const system = this.state.currentSystem;
+    const screen = this.state.currentScreen;
+    const component = this.state.currentComponent;
+    const events = this.state.currentEvent;
+    const rules = this.state.componentEventRules;
+
+    this.setState({
+      stepIndexComponentEventRule: 0, 
+      finishedComponentEventRule: false,
+      system: {
+        screen,
+        component,
+        events,
+        rules
+      },
+      componentEventRules: [],
+      stepIndexComponentEvent: 1
+    });
+
+
+  }
 
   initializeTestCase = () => {
-    if (this.state.system === ''){
+    if (this.state.currentSystem === ''){
       this.refs.systemref.showmsgerror("Um sistema deve ser informado.");
       return;
     }
 
-    if (this.state.screen === ''){
+    if (this.state.currentScreen === ''){
       this.refs.screenref.showmsgerror("Uma tela deve ser informada.");
       return;
     }    
 
-    const {initialize} = this.state;
+  const {initialize} = this.state;
     this.setState({
       initialize: true
     })
   }
 
-  doAssociateRules = () => {
+  doAssociateComponentEventRules = () => {
     console.log('For associate the rules with the component')
   }
 
@@ -171,10 +200,10 @@ class RequestTest extends React.Component {
             stepIndex, 
             stepIndexComponent, 
             finishedComponent,
-            stepIndexEvent, 
-            finishedEvent,
-            stepIndexRule, 
-            finishedRule,
+            stepIndexComponentEvent, 
+            finishedComponentEvent,
+            stepIndexComponentEventRule, 
+            finishedComponentEventRule,
           } = this.state;
     const contentStyle = {margin: '10px 16px'}; 
 
@@ -182,14 +211,12 @@ class RequestTest extends React.Component {
        <div>
           <AlertInfo messageBody={this.state.msgintro} ref="msgintroref"/>
 
-          <div onFocus={() => {this.refs.msgintroref.hideMessage()}}
-            onBlur={(event) => {this.setState({system: event.target.value})}}>
+          <div onBlur={(event) => {this.setState({currentSystem: event.target.value})}}>
             <AutoCompleteWebApp labelText='Nome do Sistema' hintText='Selecione um sistema' dataSource={states.systems} 
               fullWidth={true} ref="systemref"/>          
           </div>
 
-          <div onFocus={() => {this.refs.msgintroref.hideMessage()}}
-            onBlur={(event) => {this.setState({screen: event.target.value})}}>
+          <div onBlur={(event) => {this.setState({currentScreen: event.target.value})}}>
             <AutoCompleteWebApp labelText='Nome da Tela' hintText='Selecione uma tela' dataSource={states.screens} 
               fullWidth={true} ref="screenref"/>       
           </div>
@@ -236,70 +263,74 @@ class RequestTest extends React.Component {
       </div>
     )
 
-    const buttonsEvent = (
+    const buttonsComponentEvent = (
       <div style={{marginTop: 40, float: 'right'}}>
         <FlatButton
           label="Anterior"
-          disabled={stepIndexEvent === 0}
-          onTouchTap={this.handlePrevEvent}
+          disabled={stepIndexComponentEvent === 0}
+          onTouchTap={this.handlePrevComponentEvent}
           style={{marginRight: 12}}
         />
         <RaisedButton
-          label={stepIndexEvent === 4 ? 'Associar Evento' : 'Próximo'}
+          label={stepIndexComponentEvent === 4 ? 'Associar Evento' : 'Próximo'}
           primary={true}
-          onTouchTap={this.handleNextEvent}
+          onTouchTap={this.handleNextComponentEvent}
         />
       </div>
     )
 
-    const buttonsRule = (
+    const buttonsComponentEventRule = (
       <div style={{marginTop: 40, float: 'right'}}>
         <FlatButton
           label="Anterior"
-          disabled={stepIndexRule === 0}
-          onTouchTap={this.handlePrevRule}
+          disabled={stepIndexComponentEventRule === 0}
+          onTouchTap={this.handlePrevComponentEventRule}
           style={{marginRight: 12}}
         />
         <RaisedButton
-          label={stepIndexRule === 4 ? 'Associar Regra' : 'Próximo'}
+          label={stepIndexComponentEventRule === 2 ? 'Associar Regra' : 'Próximo'}
           primary={true}
-          onTouchTap={this.handleNextRule}
+          onTouchTap={this.handleNextComponentEventRule}
         />
       </div>
     )
 
-    const overviewTest = (
+    const componentEventRulesFinished = (
       <div>
-        <AlertInfo messageBody={this.state.msgintrotest} />
+        <AlertSuccess messageBody />
 
-        {buttons}
-      </div>
+        <RaisedButton
+          label="Concluir"
+          primary={true}
+          onTouchTap={this.handleFinishComponentEventRulesAssociation}
+        />
+      </div> 
     )
 
     const overviewComponent = (
       <div>
         <AlertInfo messageBody={this.state.msgintrocomponent} />
-        {buttonsComponent}
+        {buttons}
       </div>
     )
 
-    const overviewEvent = (
+    const overviewComponentEvent = (
       <div>
-        <AlertInfo messageBody={this.state.msgintroevent} />
-        {buttonsEvent}
+        <AlertInfo messageBody={this.state.msgintrocomponentevent} />
+        {buttonsComponentEvent}
       </div>
     )
 
-    const overviewRule = (
+    const overviewComponentEventRule = (
       <div>
-        <AlertInfo messageBody={this.state.msgintrorule} />
-        {buttonsRule}
+        <AlertInfo messageBody={this.state.msgintrocomponenteventrule} />
+        {buttonsComponentEventRule}
       </div>
     )
 
     const populateComponent = (
        <div>
-          <div onBlur={(event) => {this.setState({component: event.target.value})}}>
+          <div onBlur={(event) => {this.setState({currentComponent: event.target.value})}}>
             <AutoCompleteWebApp labelText='Nome do Componente' hintText='Selecione um componente' 
             dataSource={states.components} fullWidth={true} ref="componentref"/>          
           </div>
@@ -308,9 +339,9 @@ class RequestTest extends React.Component {
        </div>
     )
 
-    const associateEvent = (
+    const associateComponentEvent = (
         <div>
-            <div onBlur={(event) => {this.setState({currentEvent: event.target.value})}}>
+            <div onBlur={(event) => {this.setState({currentComponentEvent: event.target.value})}}>
               <AutoCompleteWebApp labelText='Nome do Evento' hintText='Selecione um evento' 
                 dataSource={states.events} fullWidth={true} ref="eventref"/>          
             </div>
@@ -318,36 +349,72 @@ class RequestTest extends React.Component {
             <div>
               <Toggle label="Carregar Regras Pré Configuradas" labelStyle={{color: 'navy', fontSize: '18px'}} 
                  ref="gerarmantisref" style={{marginTop: '3%'}}
-                 onToggle={(event, isInputChecked) => {this.setState({loadDefaultRulesForCurrentEvent: isInputChecked})}}
+                 onToggle={(event, isInputChecked) => {this.setState({loadDefaultRulesForCurrentComponentEvent: isInputChecked})}}
                  />
             </div>
        
-            {buttonsEvent}
+            {buttonsComponentEvent}
         </div>
     )
 
-    const associateRule = (
+    const associateComponentEventRules = (
+      <div>
+        <Well bsSize="small">
+          <h2>Resumo - Configuração de Componente</h2>
+
+          <Divider />
+
+          <br />
+
+          <p><strong>Sistema: </strong>{this.state.currentSystem}</p>
+          <p><strong>Tela: </strong>{this.state.currentScreen}</p>
+          <p><strong>Componente: </strong>{this.state.currentComponent}</p>
+          <strong>Regras: </strong>
+
+          <br />
+
+          <ul>
+            {
+              this.state.componentEventRules.map((item, key) => (
+               <li key={key}>{item.name}</li>
+              ))
+            }
+          </ul>
+        </Well>
+        
+        {buttonsComponentEventRule}
+      </div>
+    )
+
+    const populateComponentEventRules = (
         <div>
-            <div onBlur={(event) => {this.setState({currentRule: event.target.value})}}>
+            <div onBlur={this.associateComponentEventRules.bind(this)}>
               <AutoCompleteWebApp labelText='Nome da Regra' hintText='Selecione uma regra' 
                 dataSource={states.rules} fullWidth={true} ref="ruleref"/>          
             </div>
 
-            <RaisedButton
-              style={{float:'right', marginTop: '2%'}}
-              label="Associar Regra"
-              icon={<ActionNoteAdd />}
-              primary={true}
-              onTouchTap={this.doAssociateRules}
-            />
+            <div style={{marginTop: '3%'}}>
+              <ListGroup >
+               {
+                  this.state.componentEventRules.map((item, key) => (
+                    <ListGroupItem bsStyle="info" header="Regra:" key={key} 
+                      onClick={(event, key) => {this.state.componentEventRules.slice(key)}}>
+                      {item.name}
+                    </ListGroupItem>
+                  ))
+               }
+              </ListGroup>
+            </div>
+
+            {buttonsComponentEventRule}
         </div>
     )
 
-    const ruleSteps = (
+    const componentEventRuleSteps = (
       <div>
         <Panel header="Regras">
           <div>
-              <Stepper activeStep={stepIndexRule}>
+              <Stepper activeStep={stepIndexComponentEventRule}>
                 <Step>
                   <StepLabel>Instruções</StepLabel>
                 </Step>
@@ -360,41 +427,27 @@ class RequestTest extends React.Component {
               </Stepper>
 
               <div style={contentStyle} >
-                {finishedRule ? (
-                <p >
-                  <a href="#"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      this.setState({stepIndexRule: 0, finishedRule: false});
-                    }}
-                  >
-                    Clique aqui
-                  </a> para adicionar associar mais componentes
-                </p>
-               ) : (
-                <div style={contentStyle}>
-                  {stepIndexRule === 0 ? 
-                    overviewRule : stepIndexRule === 1 ? associateRule :
-                      <div />           
-                  }
-                </div>
-              )}
+                {finishedComponentEventRule ? (
+                  componentEventRulesFinished
+                  ) : (
+                        <div style={contentStyle}>
+                          {stepIndexComponentEventRule === 0 ? 
+                            overviewComponentEventRule : stepIndexComponentEventRule === 1 ? populateComponentEventRules :
+                              stepIndexComponentEventRule === 2 ? associateComponentEventRules : <div />
+                          }
+                        </div>
+                )}
             </div>
           </div>
         </Panel>
       </div>
     )
 
-    const eventSteps = (
+    const componentEventSteps = (
       <div>
         <Panel header="Eventos">
-          <Collapse in={this.state.currentEvent !== ''}>
-            <div>
-               <Well bsSize="small"><strong>Evento Selecionado: </strong>{this.state.currentEvent}</Well>
-            </div>
-          </Collapse>
           <div>
-            <Stepper activeStep={stepIndexEvent}>
+            <Stepper activeStep={stepIndexComponentEvent}>
               <Step>
                 <StepLabel>Instruções</StepLabel>
               </Step>
@@ -410,12 +463,12 @@ class RequestTest extends React.Component {
             </Stepper>
 
             <div style={contentStyle} >
-              {finishedEvent ? (
+              {finishedComponentEvent ? (
               <p >
                 <a href="#"
                   onClick={(event) => {
                     event.preventDefault();
-                    this.setState({stepIndexEvent: 0, finishedEvent: false});
+                    this.setState({stepIndexComponentEvent: 0, finishedComponentEvent: false});
                   }}
                 >
                   Clique aqui
@@ -423,9 +476,9 @@ class RequestTest extends React.Component {
               </p>
              ) : (
               <div style={contentStyle}>
-                {stepIndexEvent === 0 ? 
-                  overviewEvent : stepIndexEvent === 1 ? associateEvent : 
-                  stepIndexEvent === 2 ? ruleSteps : <div />
+                {stepIndexComponentEvent === 0 ? 
+                  overviewComponentEvent : stepIndexComponentEvent === 1 ? associateComponentEvent : 
+                  stepIndexComponentEvent === 2 ? componentEventRuleSteps : <div />
                 }
               </div>
             )}
@@ -440,17 +493,8 @@ class RequestTest extends React.Component {
     const componentSteps = (
       <div>
         <Panel header="Componentes">
-          <Collapse in={this.state.component !== ''}>
-            <div>
-               <Well bsSize="small"><strong>Componente Selecionado: </strong>{this.state.component}</Well>
-            </div>
-          </Collapse>
-
           <div>
             <Stepper activeStep={stepIndexComponent}>
-              <Step>
-                <StepLabel>Instruções</StepLabel>
-              </Step>
               <Step>
                 <StepLabel>Selecionar Componente</StepLabel>
               </Step>
@@ -480,11 +524,9 @@ class RequestTest extends React.Component {
              ) : (
               <div style={contentStyle}>
                 {stepIndexComponent === 0 ? 
-                  overviewComponent : 
-                    stepIndexComponent === 1 ? 
                       populateComponent : 
-                        stepIndexComponent === 2 ?
-                         eventSteps : <div />
+                        stepIndexComponent === 1 ?
+                         componentEventSteps : <div />
                 }
               </div>
             )}
@@ -498,13 +540,6 @@ class RequestTest extends React.Component {
 
     const initSteps = (
       <div>
-        <div style={{float:'left', marginRight: '4%'}}>
-          <TextField disabled={true} defaultValue={this.state.system} floatingLabelText="Sistema" />
-        </div>
-        <div>
-          <TextField disabled={true} defaultValue={this.state.screen} floatingLabelText="Tela" />
-        </div>
-        
         <div>
           <Stepper activeStep={stepIndex}>
             <Step>
@@ -539,20 +574,18 @@ class RequestTest extends React.Component {
            ) : (
             <div style={contentStyle}>
               {stepIndex === 0 ? 
-                overviewTest : 
+                overviewComponent : 
                   stepIndex === 1 ? 
                     componentSteps : 
                       <div>Teste2</div>
               }
               
               </div>
-          )}
-        </div>
-
-          
+            )}
+          </div>
         </div>
       </div>
-)
+    )
 
      const view = (
         <div className={'screen-style'}>
