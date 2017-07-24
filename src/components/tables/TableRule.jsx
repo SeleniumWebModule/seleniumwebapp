@@ -46,12 +46,12 @@ export default class TableRule extends React.Component {
                {this.props.tableValues.map((row, index) => (
                   <TableRow key={index}>
                     <TableRowColumn>{row.name}</TableRowColumn>
-                    <TableRowColumn>{row.generateMantis === false ? "Não" : "Sim"}</TableRowColumn>
-                    <TableRowColumn>{row.category === "" ? "Não definida" : row.category}</TableRowColumn>
-                    <TableRowColumn>{row.gravity === "" ? "Não definida" : row.gravity}</TableRowColumn>
-                    <TableRowColumn>{row.priority === "" ? "Não definida" : row.priority}</TableRowColumn>
-                    <TableRowColumn>{row.evidencePrintScreen === false ? "Não" : "Sim"}</TableRowColumn>
-                    <TableRowColumn>{row.evidenceVideo === false ? "Não" : "Sim"}</TableRowColumn>
+                    <TableRowColumn>{row.generateMantis === false || row.generateMantis === undefined ? "Não" : "Sim"}</TableRowColumn>
+                    <TableRowColumn>{row.category === "" || row.category === undefined ? "Não definida" : row.category}</TableRowColumn>
+                    <TableRowColumn>{row.gravity === "" || row.category ? "Não definida" : row.gravity}</TableRowColumn>
+                    <TableRowColumn>{row.priority === "" || row.category ? "Não definida" : row.priority}</TableRowColumn>
+                    <TableRowColumn>{row.evidencePrintScreen === false || row.category ? "Não" : "Sim"}</TableRowColumn>
+                    <TableRowColumn>{row.evidenceVideo === false || row.category ? "Não" : "Sim"}</TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
