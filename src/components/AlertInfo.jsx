@@ -19,7 +19,7 @@ export default class AlertInfo extends React.Component {
     return(
       <div>
         <Alert bsStyle="info" style={this.state.style} bsSize="small"
-          onClick={(event) => {this.hideAlert.bind(this)}}>
+          onClick={(event) => {this.hideMessage.bind(this)}}>
           <strong>Instruções</strong><br /> {this.props.messageBody}
         </Alert>
       </div>
