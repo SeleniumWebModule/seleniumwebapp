@@ -4,20 +4,23 @@ import { connect } from 'react-redux';
 
 class RequestEvent extends React.Component {
   render() {
-    const { paths } = this.props;
+    const {states} = this.props;
+    
+     const view = (
+        <div />
+      )
 
-    return(
-      <div className={paths.currentPath !== '/request/event' ? 'hidden' : ''}>
-        Tela de Solicitação de eventos
-      </div>
+    return (
+      states.currentPath === '/request/event' ? view : <div />
     );
   }
 }
 
-function currentPath(state) {
+function currentPath(stateReducer) {
   return {
-    paths: state
+    states: stateReducer
   }
 }
+
 
 export default connect(currentPath, null) (RequestEvent);
